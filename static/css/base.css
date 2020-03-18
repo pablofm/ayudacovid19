@@ -1,0 +1,14 @@
+html, body {
+   height: 100%;
+}
+
+body { padding-top: 70px; }
+#mapa{
+    height: 800px;
+}
+
+
+#mapa_colaborador {
+    height: 400px;
+    margin-bottom: 1em;
+}

@@ -1,0 +1,105 @@
+{% load static %}
+<!doctype html>
+<html lang="es">
+<head>
+    <meta charset="utf-8">
+    <title>Ayuda durante COVID-19</title>
+    <meta name="author" content="pabloFM">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <link rel="stylesheet" href="{% static 'assets/bootstrap-4.4.1-dist/css/bootstrap.min.css' %}">
+    <script src="{% static 'assets/jquery-3.4.1.min.js' %}"></script>
+    <script src="{% static 'assets/bootstrap-4.4.1-dist/js/bootstrap.min.js' %}"></script>
+    <link rel="stylesheet" href="{% static 'css/base.css' %}" >
+    <link rel="stylesheet" href="{% static 'assets/leaflet/leaflet.css' %}" />
+    <!-- Make sure you put this AFTER Leaflet's CSS -->
+    <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
+</head>
+
+<body>
+
+    <header>
+        <!-- Fixed navbar -->
+        <nav class="navbar fixed-top navbar-expand-md bg-dark navbar-dark">
+            <!-- Brand -->
+            <a class="navbar-brand" href="{% url 'index' %}">Ayuda durante COVID-19</a>
+            <!-- Toggler/collapsibe Button -->
+            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
+                <span class="navbar-toggler-icon"></span>
+            </button>
+            <!-- Navbar links -->
+            <div class="collapse navbar-collapse" id="collapsibleNavbar">
+                <ul class="navbar-nav">
+                    <li class="nav-item"><a class="nav-link" href="{% url 'colabora' %}">Colabora</a></li>
+                </ul>
+            </div>
+        </nav> 
+    </header>
+    <main role="main" class="flex-shrink-0">
+        <div class="container">
+            {% block content %}
+
+            <div class="row">
+                <div class="col-12">
+                    
+                    <!-- Modal -->
+                    <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
+                      <div class="modal-dialog modal-dialog-centered" role="document">
+                        <div class="modal-content">
+                          <div class="modal-header">
+                            <h5 class="modal-title" id="exampleModalLongTitle">¡Hola!</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                              <span aria-hidden="true">&times;</span>
+                            </button>
+                          </div>
+                          <div class="modal-body">
+                                <p>Si quieres ofrecerte para poder ayudar a alguien en dificultades para minimizar las salidas no dudes en añadirte como colaborador.</p>
+                                <p>Esta web estará viva mietras dure esta crisis.</p>
+                          </div>
+                          <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok!</button>
+                            
+                          </div>
+                        </div>
+                      </div>
+                    </div>
+                    <script type="text/javascript">
+                        $('#intro').modal('show');
+                    </script>
+                    <div id="mapa"></div>
+                    <script type="text/javascript">
+                        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                        var osmAttrib='Map data &copy; OpenStreetMap contributors';
+                        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+                        var map = new L.Map('mapa', { zoomControl: false });
+                        map.addLayer(osm);
+                        map.setView(new L.LatLng(40.40, -3.70),6);
+                        $.ajax({
+                            dataType: 'json',
+                            url:'{% url "colaborador-list" %}',
+                            success: function(data) {
+                                for (index in data.features){
+                                    var ubicacion = data.features[index].geometry;
+                                    var datos = data.features[index].properties;
+                                    var marker = L.marker([ubicacion.coordinates[1],ubicacion.coordinates[0]], { title: datos.nombre }).addTo(map);
+                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+
+                            }
+                        });
+
+                    </script>
+                </div>
+            </div>
+            {% endblock content %}
+        </div>
+    </main>
+    <footer>
+      <div class="text-center py-3">
+        <a href="https://github.com/pablofm/ayudacovid19"> Colabora en Github</a>
+      </div>
+    </footer>
+</body>
+</html>

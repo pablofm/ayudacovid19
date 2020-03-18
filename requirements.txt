@@ -1,0 +1,7 @@
+django==2.2.11
+gunicorn
+sentry-sdk==0.14.2
+django-bootstrap4
+djangorestframework
+djangorestframework-gis
+psycopg2
