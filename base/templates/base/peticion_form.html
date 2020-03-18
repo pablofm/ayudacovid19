@@ -8,21 +8,22 @@
     </div>
 </div>
 <div class="row">
-    <div class="col-12"><h1>Colabora</h1></div>
+    <div class="col-12"><h1>Solicita ayuda</h1></div>
 </div>
+
 <div class="row">
     <div class="col-12 col-lg-6">
         <div class="alert alert-success" role="alert">
             <p>Esta página no aspira a generar ingreso de ningún tipo ni a tratar tus datos de ninguna forma.</p>
             <p>Toda la información que proporciones será eliminada en cuanto acabe esta crisis. Además, siempre puedes eliminar tus datos enviando un correo a contacto@ayudacovid19.com y tan pronto sea posible los eliminaré</p>
         </div>
-        <p> Añade tu posición. Cuanto más exacta sea tu ubicación, tanto mejor para que quien pueda colaborar pueda encontrarte</p> 
-        <div id="mapa_colaborador"></div>
+        <p> Añade tu posición. Cuanto más exacta sea tu ubicación, tanto mejor para que quien pueda ofrecerte ayuda pueda localizarte</p> 
+        <div id="mapa_peticion"></div>
         <script>
             var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
             var osmAttrib='Map data &copy; OpenStreetMap contributors';
             var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
-            var map = new L.Map('mapa_colaborador', { zoomControl: false });
+            var map = new L.Map('mapa_peticion', { zoomControl: false });
             map.addLayer(osm);
             map.setView(new L.LatLng(40.40, -3.70),6);
             var theMarker = {};
@@ -35,7 +36,7 @@
                 if (theMarker != undefined) {
                     map.removeLayer(theMarker);
                 };
-                theMarker = L.marker([lat,lon], {icon: greenIcon}).addTo(map);  
+                theMarker = L.marker([lat,lon], {icon: redIcon}).addTo(map);  
             });
         </script>
     </div>
@@ -47,8 +48,7 @@
             {% bootstrap_field form.nombre show_label=False %}
             {% bootstrap_field form.telefono show_label=False %}
             {% bootstrap_field form.email show_label=False %}
-            {% bootstrap_field form.horario %}
-            {% bootstrap_field form.servicios show_label=False %}
+            {% bootstrap_field form.peticion show_label=False %}
             {% buttons %}
             <button type="submit" class="btn btn-primary">Añadir mis datos al mapa</button>
             {% endbuttons %}

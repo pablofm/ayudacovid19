@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'rest_framework_gis',
     'base',
     'colaboradores',
+    'peticiones',
     'bootstrap4',
 ]
 

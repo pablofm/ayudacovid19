@@ -7,8 +7,13 @@ body { padding-top: 70px; }
     height: 800px;
 }
 
-
-#mapa_colaborador {
+#mapa_colaborador, #mapa_peticion{
     height: 400px;
     margin-bottom: 1em;
 }
+
+.accion{
+    margin-left: 1em;
+    margin-right: 1em;
+}
+

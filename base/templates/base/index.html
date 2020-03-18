@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="{% static 'assets/leaflet/leaflet.css' %}" />
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
+    <script src="{% static 'js/leaflet-color-markers.js' %}"></script>
 </head>
 
 <body>
@@ -29,7 +30,8 @@
             <!-- Navbar links -->
             <div class="collapse navbar-collapse" id="collapsibleNavbar">
                 <ul class="navbar-nav">
-                    <li class="nav-item"><a class="nav-link" href="{% url 'colabora' %}">Colabora</a></li>
+                    <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'colabora' %}">Colabora</a></li>
+                    <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'pide' %}">Pide</a></li>
                 </ul>
             </div>
         </nav> 
@@ -67,6 +69,9 @@
                     </script>
                     <div id="mapa"></div>
                     <script type="text/javascript">
+                        function get_ubicacion(ubicacion){
+                            return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
+                        }
                         var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                         var osmAttrib='Map data &copy; OpenStreetMap contributors';
                         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
@@ -78,10 +83,24 @@
                             url:'{% url "colaborador-list" %}',
                             success: function(data) {
                                 for (index in data.features){
-                                    var ubicacion = data.features[index].geometry;
                                     var datos = data.features[index].properties;
-                                    var marker = L.marker([ubicacion.coordinates[1],ubicacion.coordinates[0]], { title: datos.nombre }).addTo(map);
+                                    var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(map);
                                     marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios);
+                                }
+                            },
+                            error: function (xhr, status, error) {
+                                alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+
+                            }
+                        });
+                        $.ajax({
+                            dataType: 'json',
+                            url:'{% url "peticion-list" %}',
+                            success: function(data) {
+                                for (index in data.features){
+                                    var datos = data.features[index].properties;
+                                    var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(map);
+                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Petición: "+datos.peticion);
                                 }
                             },
                             error: function (xhr, status, error) {
