@@ -43,7 +43,6 @@ INSTALLED_APPS = [
     'base',
     'colaboradores',
     'bootstrap4',
-    'analytical',
 ]
 
 MIDDLEWARE = [
