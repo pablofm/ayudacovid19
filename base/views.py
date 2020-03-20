@@ -9,6 +9,12 @@ from peticiones.forms import PeticionForm
 class HomeView(TemplateView):
     template_name = 'base/index.html'
 
+    def get_context_data(self, **kwargs):
+        context = super(HomeView, self).get_context_data(**kwargs)
+        context['colaboradores'] = Colaborador.objects.count()
+        context['peticiones'] = Peticion.objects.count()
+        return context
+
 
 class ColaboraView(CreateView):
     template_name = 'base/colaborador_form.html'

@@ -29,64 +29,68 @@
       })();
     </script>
     <!-- End Matomo Code -->
-
-
-
+    <script src="https://kit.fontawesome.com/20930eb496.js" crossorigin="anonymous"></script>
 </head>
-
 <body>
-
     <header>
-        <!-- Fixed navbar -->
-        <nav class="navbar fixed-top navbar-expand-md bg-dark navbar-dark">
-            <!-- Brand -->
-            <a class="navbar-brand" href="{% url 'index' %}">Ayuda durante COVID-19</a>
-            <!-- Toggler/collapsibe Button -->
-            <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#collapsibleNavbar">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <!-- Navbar links -->
-            <div class="collapse navbar-collapse" id="collapsibleNavbar">
-                <ul class="navbar-nav">
+        <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
+            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
+                <ul class="navbar-nav mr-auto">
                     <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'colabora' %}">Colabora</a></li>
                     <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'pide' %}">Pide</a></li>
+                    <li class="nav-item accion"><a class="nav-link" href="https://github.com/pablofm/ayudacovid19"><i class="fab fa-github"></i> Colabora en Github</a></li>
                 </ul>
             </div>
-        </nav> 
+            <div class="mx-auto order-0">
+                <a class="navbar-brand" href="{% url 'index' %}">Ayuda durante COVID-19</a>
+                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
+                    <span class="navbar-toggler-icon"></span>
+                </button>
+            </div>
+            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
+                <ul class="navbar-nav ml-auto">
+                    <li class="nav-item"><a class="nav-link" href="#"> En total hay: </a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> {{colaboradores}} colaboradores</a></li>
+                    <li class="nav-item"><a class="nav-link" href="#"> {{peticiones}} peticiones de ayuda</a></li>
+                </ul>
+            </div>
+        </nav>
     </header>
-    <main role="main" class="flex-shrink-0">
-        <div class="container">
+    <main role="main">
+        <div class="container-fluid">
             {% block content %}
-
             <div class="row">
                 <div class="col-12">
                     
                     <!-- Modal -->
                     <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
-                      <div class="modal-dialog modal-dialog-centered" role="document">
-                        <div class="modal-content">
-                          <div class="modal-header">
-                            <h5 class="modal-title" id="exampleModalLongTitle">¡Hola!</h5>
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                              <span aria-hidden="true">&times;</span>
-                            </button>
-                          </div>
-                          <div class="modal-body">
-                                <p>Si quieres ofrecerte para poder ayudar a alguien en dificultades para minimizar las salidas no dudes en añadirte como colaborador.</p>
-                                <p>Esta web estará viva mietras dure esta crisis.</p>
-                          </div>
-                          <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok!</button>
-                            
-                          </div>
+                        <div class="modal-dialog modal-dialog-centered" role="document">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLongTitle">¡Hola!</h5>
+                                </div>
+                                <div class="modal-body">
+                                    <p>Si quieres ofrecerte para poder ayudar a alguien en dificultades para minimizar las salidas no dudes en añadirte como colaborador.</p>
+                                    <p>Esta web estará viva mietras dure esta crisis.</p>
+                                    <p>Nota: Se realizan analíticas con matomo para ver si este proyecto se usa</p>
+                                </div>
+                                <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok!</button>
+                                </div>
+                            </div>
                         </div>
-                      </div>
                     </div>
                     <script type="text/javascript">
                         $('#intro').modal('show');
                     </script>
                     <div id="mapa"></div>
                     <script type="text/javascript">
+                        function resize(){
+                            $("body").css("padding-top", $("nav").height()*1.5);
+                            $('#mapa').css("height", ($(window).height() - $("nav").height()*2));    
+                        }
+                        $(window).on("resize", resize);
+                        resize();
                         function get_ubicacion(ubicacion){
                             return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
                         }
@@ -108,7 +112,6 @@
                             },
                             error: function (xhr, status, error) {
                                 alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-
                             }
                         });
                         $.ajax({
@@ -123,7 +126,6 @@
                             },
                             error: function (xhr, status, error) {
                                 alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-
                             }
                         });
 
@@ -133,11 +135,5 @@
             {% endblock content %}
         </div>
     </main>
-    <footer>
-      <div class="text-center py-3">
-        <a href="https://github.com/pablofm/ayudacovid19">Colabora en Github</a>
-        <p>Nota: He añadido analíticas con matomo para ver si este proyecto se usa</p>
-      </div>
-    </footer>
 </body>
 </html>
