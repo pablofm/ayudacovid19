@@ -8,7 +8,7 @@ from django.contrib.gis.geos import Point
 
 def importar_datos(apps, schema_editor):
     Colaborador = apps.get_model('colaboradores', 'Colaborador')
-    path = os.path.join(settings.BASE_DIR, 'colaboradores/migrations/csv/sevilla.csv')
+    path = os.path.join(settings.BASE_DIR, 'colaboradores/migrations/csv/plantilla_datos.csv')
     with open(path, newline='') as csvfile:
         reader = csv.reader(csvfile, delimiter=';', quotechar='|')
         for row in reader:
