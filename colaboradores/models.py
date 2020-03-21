@@ -17,8 +17,8 @@ class Colaborador(models.Model):
 
     geom = models.PointField(srid=4326)
     nombre = models.CharField(verbose_name='¿Cual es tu nombre?', max_length=500)
-    telefono = models.CharField(max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
-    email = models.EmailField(verbose_name='¿Cual es tu correo electrónico?')
+    telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
+    email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     horario = models.CharField(verbose_name='¿A qué horas estás disponible?', max_length=1, choices=HORARIO_CHOICES, default=TODO_EL_DIA)
     servicios = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
 

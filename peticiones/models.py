@@ -7,8 +7,8 @@ validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){
 class Peticion(models.Model):
     geom = models.PointField(srid=4326)
     nombre = models.CharField(verbose_name='¿Cual es tu nombre?', max_length=500)
-    telefono = models.CharField(max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
-    email = models.EmailField(verbose_name='¿Cual es tu correo electrónico?')
+    telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
+    email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     peticion = models.TextField(help_text='Indica qué necesitas')
 
     def __str__(self):

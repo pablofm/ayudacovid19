@@ -14,6 +14,14 @@ class ColaboradorForm(forms.ModelForm):
             raise ValidationError("Indica donde estás")
         return lat
 
+    def is_valid(self):
+        valid = super(ColaboradorForm, self).is_valid()
+        if not valid:
+            return valid
+        if not self.data["email"] and not self.data["telefono"]:
+            return False
+        return True
+
     def save(self, commit=True):
         m = super(ColaboradorForm, self).save(commit=False)
         m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
