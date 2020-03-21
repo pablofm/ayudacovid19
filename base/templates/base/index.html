@@ -60,7 +60,7 @@
         <div class="container-fluid">
             {% block content %}
             <div class="row">
-                <div class="col-12">
+                <div class="col-12 contenedor-mapa">
                     
                     <!-- Modal -->
                     <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
@@ -86,8 +86,7 @@
                     <div id="mapa"></div>
                     <script type="text/javascript">
                         function resize(){
-                            $("body").css("padding-top", $("nav").height()*1.5);
-                            $('#mapa').css("height", ($(window).height() - $("nav").height()*2));    
+                            $('#mapa').css("height", ($(window).height()));    
                         }
                         $(window).on("resize", resize);
                         resize();
@@ -133,6 +132,7 @@
                 </div>
             </div>
             {% endblock content %}
+
         </div>
     </main>
 </body>
