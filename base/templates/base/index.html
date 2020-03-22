@@ -106,7 +106,7 @@
                                 for (index in data.features){
                                     var datos = data.features[index].properties;
                                     var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(map);
-                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios);
+                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios+"<br/>Identificador: "+datos.identificador);
                                 }
                             },
                             error: function (xhr, status, error) {
@@ -120,7 +120,7 @@
                                 for (index in data.features){
                                     var datos = data.features[index].properties;
                                     var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(map);
-                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Petición: "+datos.peticion);
+                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Petición: "+datos.peticion+"<br/>Identificador: "+datos.identificador);
                                 }
                             },
                             error: function (xhr, status, error) {
