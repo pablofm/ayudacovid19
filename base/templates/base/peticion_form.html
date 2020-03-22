@@ -20,8 +20,8 @@
         <p> Añade tu posición. Cuanto más exacta sea tu ubicación, tanto mejor para que quien pueda ofrecerte ayuda pueda localizarte</p> 
         <div id="mapa_peticion"></div>
         <script>
-            var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-            var osmAttrib='Map data &copy; OpenStreetMap contributors';
+            var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+            var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
             var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
             var map = new L.Map('mapa_peticion', { zoomControl: false });
             map.addLayer(osm);
