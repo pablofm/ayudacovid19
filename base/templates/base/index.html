@@ -93,8 +93,8 @@
                         function get_ubicacion(ubicacion){
                             return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
                         }
-                        var osmUrl='http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                        var osmAttrib='Map data &copy; OpenStreetMap contributors';
+                        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                        var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
                         var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
                         var map = new L.Map('mapa', { zoomControl: false });
                         map.addLayer(osm);
