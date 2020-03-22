@@ -95,10 +95,10 @@
                         }
                         var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                         var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-                        var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+                        var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 18, attribution: osmAttrib});
                         var map = new L.Map('mapa', { zoomControl: false });
                         map.addLayer(osm);
-                        map.setView(new L.LatLng(40.40, -3.70),6);
+                        map.setView(new L.LatLng(40.40, -3.70),5);
                         $.ajax({
                             dataType: 'json',
                             url:'{% url "colaborador-list" %}',
