@@ -16,14 +16,14 @@ class HomeView(TemplateView):
         return context
 
 
-class ColaboraView(CreateView):
+class ColaboradorView(CreateView):
     template_name = 'base/colaborador_form.html'
     form_class = ColaboradorForm
     model = Colaborador
     success_url = '/'
 
 
-class PideView(CreateView):
+class PeticionView(CreateView):
     template_name = 'base/peticion_form.html'
     form_class = PeticionForm
     model = Peticion

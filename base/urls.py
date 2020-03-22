@@ -1,10 +1,10 @@
 from django.urls import path
-from base.views import HomeView, ColaboraView, PideView
+from base import views as base_views
 
 
 urlpatterns = [
-    path('', HomeView.as_view(), name='index'),
-    path('colabora', ColaboraView.as_view(), name='colabora'),
-    path('pide', PideView.as_view(), name='pide'),
+    path('', base_views.HomeView.as_view(), name='index'),
+    path('colaborador/', base_views.ColaboradorView.as_view(), name='colaborador-add'),
+    path('peticion/', base_views.PeticionView.as_view(), name='peticion-add'),
 
 ]
