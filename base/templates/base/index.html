@@ -15,6 +15,12 @@
     <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
     <script src="{% static 'js/leaflet-color-markers.js' %}"></script>
     <script src="{% static 'js/aux.js' %}"></script>
+
+    <link rel="stylesheet" href="{% static 'assets/Leaflet.markercluster-1.4.1/MarkerCluster.css' %}" />
+    <link rel="stylesheet" href="{% static 'assets/Leaflet.markercluster-1.4.1/MarkerCluster.Default.css' %}" />
+    <script src="{% static 'assets/Leaflet.markercluster-1.4.1/leaflet.markercluster.js' %}"></script>
+    <script src="{% static 'js/leaflet.markercluster.layersupport.js' %}"></script>
+
     <!-- Matomo -->
     <script type="text/javascript">
       var _paq = window._paq || [];
@@ -90,22 +96,28 @@
                             center: [40.40, -3.70],
                             zoom: 5,
                         });
-
-
                         var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                         var osmAttrib = '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>';
                         var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 18, attribution: osmAttrib}).addTo(map);
 
+                        var markers = L.markerClusterGroup.layerSupport(null);
+
                         var colaboradores = get_colaboradores('{% url "colaborador-list" %}');
                         var peticiones = get_peticiones('{% url "peticion-list" %}');
+                        
+                        markers.checkIn(colaboradores);
+                        markers.checkIn(peticiones);
+                        
                         colaboradores.addTo(map);
                         peticiones.addTo(map);
+                        
+                        markers.addTo(map);
 
                         var controles = {
                             "Colaboradores": colaboradores,
                             "Peticiones": peticiones
                         };
-                        L.control.layers(null, controles).addTo(map);
+                        L.control.layers(null, controles, {"collapsed": false}).addTo(map);
                         resize();
 
                     </script>
