@@ -14,6 +14,7 @@
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
     <script src="{% static 'js/leaflet-color-markers.js' %}"></script>
+    <script src="{% static 'js/aux.js' %}"></script>
     <!-- Matomo -->
     <script type="text/javascript">
       var _paq = window._paq || [];
@@ -49,9 +50,9 @@
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link" href="#"> En total hay: </a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"> {{colaboradores}} colaboradores</a></li>
-                    <li class="nav-item"><a class="nav-link" href="#"> {{peticiones}} peticiones de ayuda</a></li>
+                    <li class="nav-item disabled"><a class="nav-link" href="#"> En total hay: </a></li>
+                    <li class="nav-item disabled"><a class="nav-link" href="#"> {{colaboradores}} colaboradores</a></li>
+                    <li class="nav-item disabled"><a class="nav-link" href="#"> {{peticiones}} peticiones de ayuda</a></li>
                 </ul>
             </div>
         </nav>
@@ -85,48 +86,27 @@
                     </script>
                     <div id="mapa"></div>
                     <script type="text/javascript">
-                        function resize(){
-                            $('#mapa').css("height", ($(window).height()));    
-                        }
-                        $(window).on("resize", resize);
+                        var map = new L.Map('mapa', {
+                            center: [40.40, -3.70],
+                            zoom: 5,
+                        });
+
+
+                        var osmUrl = 'https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                        var osmAttrib = '&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>';
+                        var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 18, attribution: osmAttrib}).addTo(map);
+
+                        var colaboradores = get_colaboradores('{% url "colaborador-list" %}');
+                        var peticiones = get_peticiones('{% url "peticion-list" %}');
+                        colaboradores.addTo(map);
+                        peticiones.addTo(map);
+
+                        var controles = {
+                            "Colaboradores": colaboradores,
+                            "Peticiones": peticiones
+                        };
+                        L.control.layers(null, controles).addTo(map);
                         resize();
-                        function get_ubicacion(ubicacion){
-                            return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
-                        }
-                        var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
-                        var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
-                        var osm = new L.TileLayer(osmUrl, {minZoom: 3, maxZoom: 18, attribution: osmAttrib});
-                        var map = new L.Map('mapa', { zoomControl: false });
-                        map.addLayer(osm);
-                        map.setView(new L.LatLng(40.40, -3.70),5);
-                        $.ajax({
-                            dataType: 'json',
-                            url:'{% url "colaborador-list" %}',
-                            success: function(data) {
-                                for (index in data.features){
-                                    var datos = data.features[index].properties;
-                                    var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(map);
-                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios+"<br/>Identificador: "+datos.identificador);
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-                            }
-                        });
-                        $.ajax({
-                            dataType: 'json',
-                            url:'{% url "peticion-list" %}',
-                            success: function(data) {
-                                for (index in data.features){
-                                    var datos = data.features[index].properties;
-                                    var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(map);
-                                    marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Petición: "+datos.peticion+"<br/>Identificador: "+datos.identificador);
-                                }
-                            },
-                            error: function (xhr, status, error) {
-                                alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
-                            }
-                        });
 
                     </script>
                 </div>
