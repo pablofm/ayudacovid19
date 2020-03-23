@@ -36,7 +36,7 @@ function get_peticiones(url){
             alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
         }
     });
-    return res = L.layerGroup(peticiones);
+    return peticiones;
 }
 
 
