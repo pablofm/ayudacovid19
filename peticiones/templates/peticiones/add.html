@@ -1,0 +1,61 @@
+{% extends "base/index.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="row pide">
+        <div class="col-12"><h1>Solicita ayuda</h1></div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% bootstrap_form_errors form %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div class="alert alert-success" role="alert">
+                <p>Esta página no aspira a generar ingreso de ningún tipo ni a tratar tus datos de ninguna forma.</p>
+                <p>Toda la información que proporciones será eliminada en cuanto acabe esta crisis. Además, siempre puedes eliminar tus datos enviando un correo a contacto@ayudacovid19.com y tan pronto sea posible los eliminaré</p>
+                <p>La información que proporciones será pública a todo el mundo. Puedes poner teléfono o email, o incluso ambos. Pero al menos uno es necesario para que puedas ser contactad@</p>
+            </div>
+            <p> Añade tu posición. Cuanto más exacta sea tu ubicación, tanto mejor para que quien pueda ofrecerte ayuda pueda localizarte</p> 
+            <div id="mapa_peticion"></div>
+            <script>
+                var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+                var map = new L.Map('mapa_peticion');
+                map.addLayer(osm);
+                map.setView(new L.LatLng(40.40, -3.70),6);
+                var theMarker = {};
+                map.on('click', function(e){
+                    lat = e.latlng.lat;
+                    lon = e.latlng.lng;
+                    $("#lat").val(lat);
+                    $("#lon").val(lon);
+
+                    if (theMarker != undefined) {
+                        map.removeLayer(theMarker);
+                    };
+                    theMarker = L.marker([lat,lon], {icon: redIcon}).addTo(map);  
+                });
+            </script>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <input type="hidden" name="lat" id="lat" novalidate>
+                <input type="hidden" name="lon" id="lon" novalidate>
+                {% bootstrap_field form.nombre show_label=False %}
+                {% bootstrap_field form.telefono show_label=False %}
+                {% bootstrap_field form.email show_label=False %}
+                {% bootstrap_field form.peticion show_label=False %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Añadir mis datos al mapa</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

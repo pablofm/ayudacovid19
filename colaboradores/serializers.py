@@ -11,9 +11,9 @@ class ColaboradorSerializer(GeoFeatureModelSerializer):
         return obj.get_horario_display()
 
     def get_identificador(self, obj):
-        return "C-{}".format(obj.pk)
+        return obj.pk
 
     class Meta:
         model = Colaborador
         geo_field = "geom"
-        fields = '__all__'
+        fields = ['nombre', 'horario', 'servicios', 'horario', 'identificador']

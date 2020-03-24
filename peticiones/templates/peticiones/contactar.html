@@ -1,0 +1,48 @@
+{% extends "base/index.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="row colabora">
+        <div class="col-12">
+            <h1>Contactar con {{peticion.nombre}}</h1>
+            <p>Indícanos tus datos y ṕediremos permiso para que puedas contactar...</p>
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12">
+            {% bootstrap_form_errors form %}
+        </div>
+    </div>
+    <div class="row">
+        <div class="col-12 col-lg-6">
+            <div id="mapa_colaborador"></div>
+            <script>
+                var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
+                var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
+                var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
+                var map = new L.Map('mapa_colaborador');
+                map.addLayer(osm);
+                var lat = {{peticion.get_lat_js}};
+                var lon = {{peticion.get_lon_js}};
+                L.marker([lat, lon], {icon: greenIcon}).addTo(map);
+                map.setView(new L.LatLng(lat,lon),14);
+            </script>
+        </div>
+        <div class="col-12 col-lg-6">
+            <form method="post" class="form">
+                {% csrf_token %}
+                <input type="hidden" name="id_peticion" id="id_peticion" value="{{peticion.id}}" novalidate>
+                {% bootstrap_field form.nombre show_label=False %}
+                {% bootstrap_field form.email show_label=False %}
+                {% bootstrap_field form.telefono show_label=False %}
+                {% bootstrap_field form.mensaje %}
+                {% buttons %}
+                <button type="submit" class="btn btn-primary">Solicitar acceso</button>
+                {% endbuttons %}
+            </form>
+        </div>
+    </div>
+</div>
+
+{% endblock content %}

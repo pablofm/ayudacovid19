@@ -7,9 +7,9 @@ class PeticionSerializer(GeoFeatureModelSerializer):
     identificador = serializers.SerializerMethodField()
 
     def get_identificador(self, obj):
-        return "P-{}".format(obj.pk)
+        return obj.pk
 
     class Meta:
         model = Peticion
         geo_field = "geom"
-        fields = '__all__'
+        fields = ['nombre', 'peticion', 'identificador']

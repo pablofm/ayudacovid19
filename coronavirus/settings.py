@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'djcelery_email',
     'rest_framework',
     'rest_framework_gis',
     'base',
@@ -45,6 +46,7 @@ INSTALLED_APPS = [
     'peticiones',
     'bootstrap4',
 ]
+
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',

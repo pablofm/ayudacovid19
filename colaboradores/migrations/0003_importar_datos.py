@@ -18,8 +18,6 @@ def importar_datos(apps, schema_editor):
             TELEFONO = 4
             EMAIL = 5
             SERVICIOS = 6
-            print("LAT =>"+row[LAT])
-            print("LON =>"+row[LON])
             lat = float(row[LAT])
             lon = float(row[LON])
             geom = Point(lon, lat, srid=4326)

@@ -1,0 +1,18 @@
+{% extends "base/index.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="row colabora">
+        <div class="col-12">
+            <h1>Solicitud de acceso a datos de contacto</h1>
+            {% if permitido %}
+            <p>Muchas gracias por permitir a {{nombre}} ponerse en contacto contigo y ayudarle en estos momentos tan difíciles</p> 
+            <p>Esperamos que pronto se ponga en contacto contigo</p>
+            {% else %}
+            <p>El código introducido no es válido</p>
+            {% endif %}
+        </div>
+    </div>
+</div>
+{% endblock content %}

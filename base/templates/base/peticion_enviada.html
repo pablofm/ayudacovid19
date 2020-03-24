@@ -1,0 +1,18 @@
+{% extends "base/index.html" %}
+{% load bootstrap4 %}
+
+{% block content %}
+<div class="container">
+    <div class="row colabora">
+        <div class="col-12">
+            <h1>Solicitud de acceso enviada</h1>
+            <p>Acabamos de pedir permiso para poder cederte los datos de contacto solicitados.</p> 
+            <p>Esperamos que pronto nos de su autorización para poder hacerlo.</p>
+            <p>Un saludo y que tengas un buen día.</p>
+            <h2>#QUEDATEENCASA</h2>
+            <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+
+        </div>
+    </div>
+</div>
+{% endblock content %}

@@ -1,9 +1,6 @@
 from django.views.generic import TemplateView
-from django.views.generic.edit import CreateView
 from colaboradores.models import Colaborador
-from colaboradores.forms import ColaboradorForm
 from peticiones.models import Peticion
-from peticiones.forms import PeticionForm
 
 
 class HomeView(TemplateView):
@@ -16,15 +13,9 @@ class HomeView(TemplateView):
         return context
 
 
-class ColaboradorView(CreateView):
-    template_name = 'base/colaborador_form.html'
-    form_class = ColaboradorForm
-    model = Colaborador
-    success_url = '/'
+class PeticionEnviadaView(HomeView):
+    template_name = 'base/peticion_enviada.html'
 
 
-class PeticionView(CreateView):
-    template_name = 'base/peticion_form.html'
-    form_class = PeticionForm
-    model = Peticion
-    success_url = '/'
+class DatosRecibidosView(HomeView):
+    template_name = 'base/datos_recibidos.html'

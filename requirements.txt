@@ -6,3 +6,5 @@ djangorestframework
 djangorestframework-gis
 #psycopg2
 Faker
+factory-boy
+django-shortuuidfield

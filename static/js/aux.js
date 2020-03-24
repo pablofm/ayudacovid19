@@ -1,16 +1,36 @@
 function get_ubicacion(ubicacion){
     return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
 }
-function get_colaboradores(url){
+
+function generar_popup_colaborador(nombre, horario, servicios, identificador){
+    var popup = "<b>$NOMBRE$</b></br>Horario: $HORARIO$<br/>Tipo de ayuda: $SERVICIOS$ <br/>Identificador: $IDENTIFICADOR$";
+    popup = popup.replace("$NOMBRE$", nombre);
+    popup = popup.replace("$HORARIO$", horario);
+    popup = popup.replace("$SERVICIOS$", servicios);
+    popup = popup.replace("$IDENTIFICADOR$", "C-"+identificador);
+    return popup;
+}
+
+function generar_popup_peticion(nombre, peticion, identificador){
+    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Petición: $PETICION$<br/>Identificador: $IDENTIFICADOR$";
+    popup = popup.replace("$NOMBRE$", nombre);
+    popup = popup.replace("$PETICION$", peticion);
+    popup = popup.replace("$IDENTIFICADOR$", "P-"+identificador);
+    return popup;
+}
+
+function get_colaboradores(url_colaboradores, url_contacto){
     var colaboradores = L.layerGroup();
     $.ajax({
         dataType: 'json',
-        url: url,
+        url: url_colaboradores,
         success: function(data) {
             for (index in data.features){
                 var datos = data.features[index].properties;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(colaboradores);
-                marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Horario: "+datos.horario+"<br/>Tipo de ayuda: "+datos.servicios+"<br/>Identificador: "+datos.identificador);
+                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.servicios, datos.identificador);
+                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
+                marker.bindPopup(popup);
             }
         },
         error: function (xhr, status, error) {
@@ -20,16 +40,18 @@ function get_colaboradores(url){
     return colaboradores;
 }
 
-function get_peticiones(url){
+function get_peticiones(url_peticiones, url_contacto){
     var peticiones = L.layerGroup();
     $.ajax({
         dataType: 'json',
-        url: url,
+        url: url_peticiones,
         success: function(data) {
             for (index in data.features){
                 var datos = data.features[index].properties;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(peticiones);
-                marker.bindPopup("<b>"+datos.nombre+"</b></br>Teléfono:"+datos.telefono+"<br/>Email: "+datos.email+"<br/>Petición: "+datos.peticion+"<br/>Identificador: "+datos.identificador);
+                var popup = generar_popup_peticion(datos.nombre, datos.peticion, datos.identificador);
+                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
+                marker.bindPopup(popup);
             }
         },
         error: function (xhr, status, error) {

@@ -22,7 +22,7 @@
     <script src="{% static 'js/leaflet.markercluster.layersupport.js' %}"></script>
 
     <!-- Matomo -->
-    <script type="text/javascript">
+    <script>
       var _paq = window._paq || [];
       /* tracker methods like "setCustomDimension" should be called before "trackPageView" */
       _paq.push(['trackPageView']);
@@ -56,19 +56,16 @@
             </div>
             <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
                 <ul class="navbar-nav ml-auto">
-                    <li class="nav-item disabled"><a class="nav-link" href="#"> En total hay: </a></li>
-                    <li class="nav-item disabled"><a class="nav-link" href="#"> {{colaboradores}} colaboradores</a></li>
-                    <li class="nav-item disabled"><a class="nav-link" href="#"> {{peticiones}} peticiones de ayuda</a></li>
+                    <li class="nav-item"><a class="nav-link disabled" href="#"> En total hay {{colaboradores}} colaboradores y {{peticiones}} peticiones de ayuda. </a></li>
                 </ul>
             </div>
         </nav>
     </header>
-    <main role="main">
+    <main>
+        {% block content %}
         <div class="container-fluid">
-            {% block content %}
             <div class="row">
                 <div class="col-12 contenedor-mapa">
-                    
                     <!-- Modal -->
                     <div class="modal fade" id="intro" tabindex="-1" role="dialog" aria-labelledby="exampleModalCenterTitle" aria-hidden="true">
                         <div class="modal-dialog modal-dialog-centered" role="document">
@@ -87,11 +84,9 @@
                             </div>
                         </div>
                     </div>
-                    <script type="text/javascript">
-                        $('#intro').modal('show');
-                    </script>
                     <div id="mapa"></div>
-                    <script type="text/javascript">
+                    <script>
+                        $('#intro').modal('show');
                         var map = new L.Map('mapa', {
                             center: [40.40, -3.70],
                             zoom: 5,
@@ -102,8 +97,8 @@
 
                         var markers = L.markerClusterGroup.layerSupport(null);
 
-                        var colaboradores = get_colaboradores('{% url "colaborador-list" %}');
-                        var peticiones = get_peticiones('{% url "peticion-list" %}');
+                        var colaboradores = get_colaboradores('{% url "colaborador-list" %}', '{% url "contactar-colaborador" 0 %}' );
+                        var peticiones = get_peticiones('{% url "peticion-list" %}', '{% url "contactar-peticion" 0 %}');
                         
                         markers.checkIn(colaboradores);
                         markers.checkIn(peticiones);
@@ -123,9 +118,8 @@
                     </script>
                 </div>
             </div>
-            {% endblock content %}
-
         </div>
+        {% endblock content %}
     </main>
 </body>
 </html>
