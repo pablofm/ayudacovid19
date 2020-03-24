@@ -5,6 +5,7 @@ from django.views.generic.edit import CreateView
 from colaboradores.forms import ContactarColaboradorForm, ColaboradorForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 class APIColaboradoresView(viewsets.ReadOnlyModelViewSet):
@@ -20,13 +21,16 @@ class CrearColaboradorView(CreateView):
 
 
 class SolicitarContactoColaboradorView(CreateView):
+    # def get(self, request, *args, **kwargs):
+    #     return HttpResponse('Hello, World!')
+
     template_name = 'colaboradores/contactar.html'
     form_class = ContactarColaboradorForm
     success_url = reverse_lazy('peticion_enviada')
 
     def get_context_data(self, **kwargs):
         context = super(SolicitarContactoColaboradorView, self).get_context_data(**kwargs)
-        context['colaborador'] = Colaborador.objects.get(pk=self.kwargs['pk'])
+        context['colaborador'] = get_object_or_404(Colaborador, pk=self.kwargs['pk'])
         return context
 
 

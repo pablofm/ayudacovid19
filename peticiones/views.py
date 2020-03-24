@@ -6,6 +6,7 @@ from peticiones.forms import PeticionForm, ContactarPeticionForm
 from peticiones.models import SolicitudAccesoPeticion
 from django.shortcuts import render
 from django.urls import reverse_lazy
+from django.shortcuts import get_object_or_404
 
 
 class APIColaboradoresView(viewsets.ReadOnlyModelViewSet):
@@ -27,7 +28,7 @@ class SolicitarContactoPeticionView(CreateView):
 
     def get_context_data(self, **kwargs):
         context = super(SolicitarContactoPeticionView, self).get_context_data(**kwargs)
-        context['peticion'] = Peticion.objects.get(pk=self.kwargs['pk'])
+        context['peticion'] = get_object_or_404(Peticion, pk=self.kwargs['pk'])
         return context
 
 
