@@ -67,4 +67,59 @@ function resize(){
     $('#mapa').css("height", $(window).height()-$('nav').outerHeight());    
 }
 
+function get_current_location() {
+    return new Promise((resolve) => {
+        if ('geolocation' in navigator) {
+            navigator.geolocation.getCurrentPosition(
+                ({ coords: { latitude, longitude } }) => {
+                    resolve({ latitude, longitude });
+                },
+                // Como es una feature opcional, nos dan igual los errores
+                () => resolve(undefined),
+                {
+                    enableHighAccuracy: true,
+                }
+            );
+        } else {
+            resolve(undefined);
+        }
+    });
+}
+
+function wait(ms) {
+    return new Promise(resolve => setTimeout(resolve, ms));
+}
+
+async function map_go_to_current_location(map) {
+    const location = await get_current_location();
+
+    if (location) {
+        // Reseteamos las coordinadas. Si no lo hacemos, Leaflet
+        // a veces nos lleva a la ubicación incorrecta
+        map.setView([0, 0]);
+
+        await wait(100);
+
+        map.setView([location.latitude, location.longitude]);
+        map.setZoom(12);
+
+        return location;
+    }
+}
+
+var theMarker;
+
+function map_mark(map, icon, lat, lon) {
+    if (theMarker != undefined) {
+        map.removeLayer(theMarker);
+    };
+
+    theMarker = L.marker([lat,lon], {icon}).addTo(map);
+}
+
+async function map_mark_current_location(map, icon) {
+    const location = await map_go_to_current_location(map);
+    map_mark(map, icon, location.latitude, location.longitude)
+}
+
 $(window).on("resize", resize);
