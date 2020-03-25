@@ -7,8 +7,42 @@ class PeticionAdmin(admin.OSMGeoAdmin):
 
 
 class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
-    list_display = ('nombre', 'id', 'acceso_permitido', 'codigo_acceso')
-    readonly_fields = ('codigo_acceso', 'url_autorizacion', )
+    exclude = ['peticion']
+    list_display = (
+        'nombre',
+        'id',
+        'acceso_permitido',
+        'codigo_acceso'
+    )
+    readonly_fields = (
+        'codigo_acceso',
+        'url_autorizacion',
+        'get_nombre_necesitado',
+        'get_telefono_necesitado',
+        'get_email_necesitado',
+        'get_peticion_necesitado'
+    )
+    fieldsets = (
+        ('Datos de la petición', {
+            'fields': (
+                'get_nombre_necesitado',
+                'get_telefono_necesitado',
+                'get_email_necesitado',
+                'get_peticion_necesitado',
+                'codigo_acceso',
+                'url_autorizacion',
+                'acceso_permitido',
+            ),
+        }),
+        ("Datos del colaborador", {
+            'fields': (
+                'nombre',
+                'telefono',
+                'email',
+                'mensaje',
+            ),
+        }),
+    )
 
 
 admin.site.register(Peticion, PeticionAdmin)
