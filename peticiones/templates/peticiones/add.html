@@ -34,11 +34,10 @@
                     $("#lat").val(lat);
                     $("#lon").val(lon);
 
-                    if (theMarker != undefined) {
-                        map.removeLayer(theMarker);
-                    };
-                    theMarker = L.marker([lat,lon], {icon: redIcon}).addTo(map);  
+                    map_mark(map, redIcon, lat, lon);
                 });
+
+                map_mark_current_location(map, redIcon);
             </script>
         </div>
         <div class="col-12 col-lg-6">
