@@ -119,7 +119,10 @@ function map_mark(map, icon, lat, lon) {
 
 async function map_mark_current_location(map, icon) {
     const location = await map_go_to_current_location(map);
-    map_mark(map, icon, location.latitude, location.longitude)
+    
+    if (location) {
+        map_mark(map, icon, location.latitude, location.longitude)
+    }
 }
 
 $(window).on("resize", resize);
