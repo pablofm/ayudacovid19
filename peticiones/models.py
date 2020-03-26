@@ -4,7 +4,6 @@ from shortuuidfield import ShortUUIDField
 from django.urls import reverse
 from django.contrib.sites.models import Site
 
-
 validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 
 
@@ -14,6 +13,7 @@ class Peticion(models.Model):
     telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     mensaje = models.TextField(help_text='Indica qué necesitas')
+    creacion = models.DateTimeField(auto_now_add=True)
 
     def get_lat_js(self):
         lat_str = str(self.geom.y)
@@ -39,6 +39,7 @@ class SolicitudAccesoPeticion(models.Model):
     mensaje = models.TextField(verbose_name='¿Cómo puedes ayudar?')
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()
+    creacion = models.DateTimeField(auto_now_add=True)
 
     def get_nombre_necesitado(self):
         return self.peticion.nombre

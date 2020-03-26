@@ -3,8 +3,10 @@ from django.core.validators import RegexValidator
 from shortuuidfield import ShortUUIDField
 from django.urls import reverse
 from django.contrib.sites.models import Site
+from datetime import datetime
 
 validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
+detault_datetime = datetime(2000, 1, 1, 0, 0, 0, 0)
 
 
 class Colaborador(models.Model):
@@ -24,6 +26,7 @@ class Colaborador(models.Model):
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     horario = models.CharField(verbose_name='¿A qué horas estás disponible?', max_length=1, choices=HORARIO_CHOICES, default=TODO_EL_DIA)
     mensaje = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
+    creacion = models.DateTimeField(auto_now_add=True)
 
     def get_lat_js(self):
         lat_str = str(self.geom.y)
@@ -49,6 +52,7 @@ class SolicitudAccesoColaborador(models.Model):
     mensaje = models.TextField(verbose_name='¿Qué necesitas?')
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()
+    creacion = models.DateTimeField(auto_now_add=True)
 
     def get_nombre_colaborador(self):
         return self.colaborador.nombre
