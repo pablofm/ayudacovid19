@@ -14,4 +14,4 @@ class ColaboradorFactory(factory.Factory):
     telefono = '666666666'
     email = fake.email(),
     horario = '1'
-    servicios = fake.paragraphs(nb=3)
+    mensaje = fake.paragraphs(nb=3)
