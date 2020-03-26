@@ -23,7 +23,7 @@ class Colaborador(models.Model):
     telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     horario = models.CharField(verbose_name='¿A qué horas estás disponible?', max_length=1, choices=HORARIO_CHOICES, default=TODO_EL_DIA)
-    servicios = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
+    mensaje = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
 
     def get_lat_js(self):
         lat_str = str(self.geom.y)
@@ -62,8 +62,8 @@ class SolicitudAccesoColaborador(models.Model):
     def get_horario_colaborador(self):
         return self.colaborador.get_horario_display()
 
-    def get_servicios_colaborador(self):
-        return self.colaborador.servicios
+    def get_mensaje_colaborador(self):
+        return self.colaborador.mensaje
 
     def url_autorizacion(self):
         return "{0}?codigo={1}".format(reverse("validar-acceso-colaborador"), self.codigo_acceso)

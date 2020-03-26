@@ -12,4 +12,4 @@ class PeticionSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Peticion
         geo_field = "geom"
-        fields = ['nombre', 'peticion', 'identificador']
+        fields = ['nombre', 'mensaje', 'identificador']

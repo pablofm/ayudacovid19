@@ -20,7 +20,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
         'get_nombre_necesitado',
         'get_telefono_necesitado',
         'get_email_necesitado',
-        'get_peticion_necesitado'
+        'get_mensaje_necesitado'
     )
     fieldsets = (
         ('Datos de la petición', {
@@ -28,7 +28,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
                 'get_nombre_necesitado',
                 'get_telefono_necesitado',
                 'get_email_necesitado',
-                'get_peticion_necesitado',
+                'get_mensaje_necesitado',
                 'codigo_acceso',
                 'url_autorizacion',
                 'acceso_permitido',

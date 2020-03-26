@@ -11,7 +11,7 @@ class Peticion(models.Model):
     nombre = models.CharField(verbose_name='¿Cual es tu nombre?', max_length=500)
     telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
-    peticion = models.TextField(help_text='Indica qué necesitas')
+    mensaje = models.TextField(help_text='Indica qué necesitas')
 
     def get_lat_js(self):
         lat_str = str(self.geom.y)
@@ -47,8 +47,8 @@ class SolicitudAccesoPeticion(models.Model):
     def get_email_necesitado(self):
         return self.peticion.email
 
-    def get_peticion_necesitado(self):
-        return self.peticion.peticion
+    def get_mensaje_necesitado(self):
+        return self.peticion.mensaje
 
     def url_autorizacion(self):
         return "{0}?codigo={1}".format(reverse("validar-acceso-peticion"), self.codigo_acceso)

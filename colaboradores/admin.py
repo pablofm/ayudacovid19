@@ -22,10 +22,9 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
         'get_telefono_colaborador',
         'get_email_colaborador',
         'get_horario_colaborador',
-        'get_servicios_colaborador',
+        'get_mensaje_colaborador',
     )
 
-    
     fieldsets = (
         ('Datos del Colaborador', {
             'fields': (
@@ -33,7 +32,7 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
                 'get_telefono_colaborador',
                 'get_email_colaborador',
                 'get_horario_colaborador',
-                'get_servicios_colaborador',
+                'get_mensaje_colaborador',
                 'codigo_acceso',
                 'url_autorizacion',
                 'acceso_permitido',

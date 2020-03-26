@@ -16,4 +16,4 @@ class ColaboradorSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Colaborador
         geo_field = "geom"
-        fields = ['nombre', 'horario', 'servicios', 'horario', 'identificador']
+        fields = ['nombre', 'horario', 'mensaje', 'horario', 'identificador']

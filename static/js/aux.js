@@ -28,7 +28,7 @@ function get_colaboradores(url_colaboradores, url_contacto){
             for (index in data.features){
                 var datos = data.features[index].properties;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(colaboradores);
-                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.servicios, datos.identificador);
+                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.mensaje, datos.identificador);
                 var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
                 marker.bindPopup(popup);
             }
@@ -49,7 +49,7 @@ function get_peticiones(url_peticiones, url_contacto){
             for (index in data.features){
                 var datos = data.features[index].properties;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(peticiones);
-                var popup = generar_popup_peticion(datos.nombre, datos.peticion, datos.identificador);
+                var popup = generar_popup_peticion(datos.nombre, datos.mensaje, datos.identificador);
                 var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
                 marker.bindPopup(popup);
             }
