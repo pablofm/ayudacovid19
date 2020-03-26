@@ -2,6 +2,7 @@ from django.contrib.gis import forms
 from peticiones.models import Peticion, SolicitudAccesoPeticion
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
+from base.emails import enviar_correo_ofreciendo_ayuda
 
 
 class PeticionForm(forms.ModelForm):
@@ -42,9 +43,15 @@ class ContactarPeticionForm(forms.ModelForm):
         contacto = super(ContactarPeticionForm, self).save(commit=False)
         contacto.peticion = Peticion.objects.get(pk=self.cleaned_data['id_peticion'])
         contacto.save()
-        # TODO
-        # Enviar notificación solicitando el acceso a los datos de la persona que pide ayuda.
-        # Por el momento será un proceso manual
+        # Se envía un correo donde alquien quiere ayuda a una persona necesitada y solicita el acceso a sus datos.
+        datos_email = {
+            'peticion':  contacto.peticion.nombre,
+            'email': contacto.peticion.email,
+            'nombre':  contacto.nombre,
+            'mensaje':  contacto.mensaje,
+            'enlace': contacto.url_autorizacion()
+        }
+        enviar_correo_ofreciendo_ayuda(datos_email)
         return contacto
 
     class Meta:

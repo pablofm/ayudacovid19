@@ -1,8 +1,9 @@
 from django.contrib.gis import forms
-from colaboradores.models import Colaborador, SolicitudAccesoColaborador
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
 from django.core.validators import RegexValidator
+from colaboradores.models import Colaborador, SolicitudAccesoColaborador
+from base.emails import enviar_correo_pidiendo_ayuda
 
 validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 
@@ -39,15 +40,22 @@ class ColaboradorForm(forms.ModelForm):
 
 
 class ContactarColaboradorForm(forms.ModelForm):
+
     id_colaborador = forms.IntegerField(required=False)
 
     def save(self):
         contacto = super(ContactarColaboradorForm, self).save(commit=False)
         contacto.colaborador = Colaborador.objects.get(pk=self.cleaned_data['id_colaborador'])
         contacto.save()
-        # TODO
-        # Enviar notificación solicitando el acceso a los datos del colaborador.
-        # Por el momento será un proceso manual
+        # Se envía un correo donde alquien que necesita ayuda solicita el acceso a los datos un colaborador.
+        datos_email = {
+            'colaborador':  contacto.colaborador.nombre,
+            'email': contacto.colaborador.email,
+            'nombre':  contacto.nombre,
+            'mensaje':  contacto.mensaje,
+            'enlace': contacto.url_autorizacion()
+        }
+        enviar_correo_pidiendo_ayuda(datos_email)
         return contacto
 
     class Meta:

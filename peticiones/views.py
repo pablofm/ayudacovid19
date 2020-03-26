@@ -7,6 +7,7 @@ from peticiones.models import SolicitudAccesoPeticion
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+from base.emails import enviar_correo_acceso_datos
 
 
 class APIColaboradoresView(viewsets.ReadOnlyModelViewSet):
@@ -46,9 +47,28 @@ def permitirContacto(request):
         solicitud.save()
         permitido = True
         nombre = solicitud.nombre
-        # TODO
-        # En este punto la persona que necesita ayuda ha compartido sus datos.
-        # Enviar mensaje al colaborador compartiendo los datos.
-        # Por el momento será un proceso manual
+
+        # La persona necesitada da permiso para compartir sus datos. Se envían 2 correos:
+        # El primero para el colaborador, con los datos de la persona que necesita ayuda
+        datos_email_colaborador = {
+            'nombre_para': solicitud.nombre,
+            'email_para': solicitud.email,
+            'nombre_contacto': solicitud.peticion.nombre,
+            'telefono_contacto': solicitud.peticion.telefono,
+            'email_contacto': solicitud.peticion.email,
+            'mensaje_contacto': solicitud.peticion.mensaje
+        }
+        enviar_correo_acceso_datos(datos_email_colaborador)
+
+        # El segundo para la persona necesitada, con los datos de la persona que le ofrece ayuda
+        datos_email_solicitante = {
+            'nombre_para': solicitud.peticion.nombre,
+            'email_para': solicitud.peticion.email,
+            'nombre_contacto': solicitud.nombre,
+            'telefono_contacto': solicitud.telefono,
+            'email_contacto': solicitud.email,
+            'mensaje_contacto': solicitud.mensaje
+        }
+        enviar_correo_acceso_datos(datos_email_solicitante)
 
     return render(request, 'base/validar_codigo.html', {"nombre": nombre, "permitido": permitido})

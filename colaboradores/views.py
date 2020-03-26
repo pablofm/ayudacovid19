@@ -6,6 +6,7 @@ from colaboradores.forms import ContactarColaboradorForm, ColaboradorForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
+from base.emails import enviar_correo_acceso_datos
 
 
 class APIColaboradoresView(viewsets.ReadOnlyModelViewSet):
@@ -21,9 +22,6 @@ class CrearColaboradorView(CreateView):
 
 
 class SolicitarContactoColaboradorView(CreateView):
-    # def get(self, request, *args, **kwargs):
-    #     return HttpResponse('Hello, World!')
-
     template_name = 'colaboradores/contactar.html'
     form_class = ContactarColaboradorForm
     success_url = reverse_lazy('peticion_enviada')
@@ -48,9 +46,28 @@ def permitirContacto(request):
         solicitud.save()
         permitido = True
         nombre = solicitud.nombre
-        # TODO
-        # En este punto el colaborador ha compartido sus datos.
-        # Enviar mensaje a la persona que necesita ayuda compartiendo los datos.
-        # Por el momento será un proceso manual
+
+        # El colaborador da permiso para compartir sus datos. Se envían 2 correos:
+        # El primero para el colaborador, con los datos de la persona que necesita ayuda
+        datos_email_colaborador = {
+            'nombre_para': solicitud.colaborador.nombre,
+            'email_para': solicitud.colaborador.email,
+            'nombre_contacto': solicitud.nombre,
+            'telefono_contacto': solicitud.telefono,
+            'email_contacto': solicitud.email,
+            'mensaje_contacto': solicitud.mensaje,
+        }
+        enviar_correo_acceso_datos(datos_email_colaborador)
+        # El segundo para la persona necesitada, con los datos de la persona que le ofrece ayuda
+
+        datos_email_solicitante = {
+            'nombre_para': solicitud.nombre,
+            'email_para': solicitud.email,
+            'nombre_contacto': solicitud.colaborador.nombre,
+            'telefono_contacto': solicitud.colaborador.telefono,
+            'email_contacto': solicitud.colaborador.email,
+            'mensaje_contacto': solicitud.colaborador.mensaje
+        }
+        enviar_correo_acceso_datos(datos_email_solicitante)
 
     return render(request, 'base/validar_codigo.html', {"nombre": nombre, "permitido": permitido})
