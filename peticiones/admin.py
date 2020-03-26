@@ -3,7 +3,8 @@ from peticiones.models import Peticion, SolicitudAccesoPeticion
 
 
 class PeticionAdmin(admin.OSMGeoAdmin):
-    list_display = ('id', 'geom', 'nombre', 'telefono', 'email')
+    list_display = ('nombre', 'id', 'telefono', 'email', 'creacion')
+    readonly_fields = ('creacion',)
 
 
 class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
@@ -12,7 +13,8 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
         'nombre',
         'id',
         'acceso_permitido',
-        'codigo_acceso'
+        'codigo_acceso',
+        'creacion',
     )
     readonly_fields = (
         'codigo_acceso',
@@ -20,7 +22,8 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
         'get_nombre_necesitado',
         'get_telefono_necesitado',
         'get_email_necesitado',
-        'get_mensaje_necesitado'
+        'get_mensaje_necesitado',
+        'creacion'
     )
     fieldsets = (
         ('Datos de la petición', {
@@ -40,6 +43,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
                 'telefono',
                 'email',
                 'mensaje',
+                'creacion',
             ),
         }),
     )

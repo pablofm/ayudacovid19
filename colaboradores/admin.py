@@ -3,7 +3,8 @@ from colaboradores.models import Colaborador, SolicitudAccesoColaborador
 
 
 class ColaboradorAdmin(admin.OSMGeoAdmin):
-    list_display = ('id', 'geom', 'nombre', 'telefono', 'email')
+    list_display = ('nombre', 'id', 'telefono', 'email', 'creacion')
+    readonly_fields = ('creacion',)
 
 
 class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
@@ -12,7 +13,8 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
         'nombre',
         'id',
         'acceso_permitido',
-        'codigo_acceso'
+        'codigo_acceso',
+        'creacion',
     )
 
     readonly_fields = (
@@ -23,6 +25,7 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
         'get_email_colaborador',
         'get_horario_colaborador',
         'get_mensaje_colaborador',
+        'creacion',
     )
 
     fieldsets = (
@@ -44,6 +47,7 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
                 'telefono',
                 'email',
                 'mensaje',
+                'creacion',
             ),
         }),
     )
