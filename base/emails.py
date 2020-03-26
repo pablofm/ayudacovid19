@@ -13,7 +13,6 @@ def enviar_correo_pidiendo_ayuda(datos):
         'mensaje':  Mensaje de la persona que solicita ayuda
         'enlace': Enlace para validar el acceso
     '''
-    print(datos)
     asunto = "Alguien te necesita"
     plain_message = """
         Hola {0},
@@ -70,11 +69,10 @@ def enviar_correo_acceso_datos(datos):
         'email_contacto':  Email del contacto
         'mensaje_contacto':  Mensaje del contacto
     '''
-    print(datos)
     asunto = "Han aceptado tu solicitud de contacto"
     plain_message = """
         Hola {0},
-        La persona a la que intentas ayudar o le has ofrecido tu ayuda ha aceptado que podamos compartir sus datos y os pongáis en contacto. Sus datos son:
+        La persona con la que esperabas contactar ha aceptado que podamos compartir sus datos y os pongáis en contacto. Sus datos son:
             - Nombre: {1}
             - Teléfono: {2}
             - Email: {3}

@@ -27,7 +27,6 @@ else:
 
 ALLOWED_HOSTS = ['*']
 
-
 # Application definition
 
 INSTALLED_APPS = [
@@ -39,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django.contrib.sites',
+    'djcelery_email',
     'rest_framework',
     'rest_framework_gis',
     'base',
@@ -90,7 +90,6 @@ if ON_PROD:
             'PORT': ''
         }
     }
-
 else:
     DATABASES = {
         'default': {
@@ -128,6 +127,10 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "static"),
 ]
 
+CELERY_BROKER_URL = 'amqp://localhost'
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+
 if ON_PROD:
     SECURE_BROWSER_XSS_FILTER = True
     SECURE_CONTENT_TYPE_NOSNIFF = True
@@ -136,7 +139,7 @@ if ON_PROD:
     X_FRAME_OPTIONS = 'DENY'
 
 if ON_PROD:
-    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+    EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
     EMAIL_USE_SSL = os.environ['EMAIL_USE_SSL']
     EMAIL_HOST = os.environ['EMAIL_HOST']
     EMAIL_PORT = os.environ['EMAIL_PORT']

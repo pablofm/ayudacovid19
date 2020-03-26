@@ -8,3 +8,5 @@ djangorestframework-gis
 Faker
 factory-boy
 django-shortuuidfield
+celery
+django-celery-email
