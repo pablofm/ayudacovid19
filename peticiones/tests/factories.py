@@ -13,4 +13,4 @@ class PeticionFactory(factory.Factory):
     nombre = fake.name()
     telefono = '666666666'
     email = fake.email(),
-    peticion = fake.paragraphs(nb=3)
+    mensaje = fake.paragraphs(nb=3)

@@ -15,7 +15,7 @@ class ColaboradorFormTest(TestCase):
             'email': fake.email(),
             'telefono': '666666666',
             'horario': '0',
-            'servicios': fake.paragraphs(nb=3)
+            'mensaje': fake.paragraphs(nb=3)
         }
 
     def test_formulario_vacio_no_es_valido(self):
