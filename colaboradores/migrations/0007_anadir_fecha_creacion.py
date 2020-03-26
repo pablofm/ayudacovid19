@@ -33,15 +33,4 @@ class Migration(migrations.Migration):
             field=models.DateTimeField(auto_now_add=True, null=True),
         ),
         migrations.RunPython(populate_dates),
-        migrations.AlterField(
-            model_name='colaborador',
-            name='creacion',
-            field=models.DateTimeField(auto_now_add=True),
-        ),
-        migrations.AlterField(
-            model_name='solicitudaccesocolaborador',
-            name='creacion',
-            field=models.DateTimeField(auto_now_add=True),
-        ),
-
     ]
