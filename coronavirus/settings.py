@@ -38,6 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'django.contrib.gis',
+    'django.contrib.sites',
     'rest_framework',
     'rest_framework_gis',
     'base',
@@ -46,6 +47,7 @@ INSTALLED_APPS = [
     'bootstrap4',
 ]
 
+SITE_ID = 1
 
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
