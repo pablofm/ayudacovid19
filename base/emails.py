@@ -13,7 +13,7 @@ def enviar_correo_pidiendo_ayuda(datos):
         'mensaje':  Mensaje de la persona que solicita ayuda
         'enlace': Enlace para validar el acceso
     '''
-    asunto = "Alguien te necesita"
+    asunto = "{} te necesita".format(datos["nombre"])
     plain_message = """
         Hola {0},
         Nos ponemos en contacto contigo porque alguien ha solicitado tu ayuda. Los datos de la petición son los siguientes:
@@ -41,7 +41,7 @@ def enviar_correo_ofreciendo_ayuda(datos):
         'enlace': Enlace para validar el acceso
     '''
 
-    asunto = "Alguien quiere ayudarte"
+    asunto = "{} quiere ayudarte".format(datos["nombre"])
     plain_message = """
         Hola {0},
         Nos ponemos en contacto contigo porque alguien quiere ayudarte. Los datos de la petición son los siguientes:
@@ -69,7 +69,7 @@ def enviar_correo_acceso_datos(datos):
         'email_contacto':  Email del contacto
         'mensaje_contacto':  Mensaje del contacto
     '''
-    asunto = "Han aceptado tu solicitud de contacto"
+    asunto = "{} Ha aceptado tu solicitud de contacto".format(datos["nombre_contacto"])
     plain_message = """
         Hola {0},
         La persona con la que esperabas contactar ha aceptado que podamos compartir sus datos y os pongáis en contacto. Sus datos son:
