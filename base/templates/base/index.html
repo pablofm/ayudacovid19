@@ -79,7 +79,9 @@
                                     <p>Nota: Se realizan analíticas para ver si este proyecto se usa.</p>
                                 </div>
                                 <div class="modal-footer">
-                                    <button type="button" class="btn btn-secondary" data-dismiss="modal">Ok!</button>
+                                    <button type="button" class="btn btn-secondary"
+                                    id="welcome-modal-dismiss"
+                                    data-dismiss="modal">Ok!</button>
                                 </div>
                             </div>
                         </div>
@@ -115,6 +117,10 @@
                         L.control.layers(null, controles, {"collapsed": false}).addTo(map);
                         resize();
 
+                        document.getElementById("welcome-modal-dismiss")
+                            .addEventListener('click', () => {
+                                map_go_to_current_location(map);
+                            });
                     </script>
                 </div>
             </div>
