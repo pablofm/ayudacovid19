@@ -10,8 +10,9 @@ class ColaboradorAdmin(admin.OSMGeoAdmin):
 class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
     exclude = ['colaborador']
     list_display = (
-        'nombre',
         'id',
+        'nombre',
+        'get_nombre_colaborador',
         'acceso_permitido',
         'codigo_acceso',
         'creacion',

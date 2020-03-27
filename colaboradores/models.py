@@ -76,5 +76,5 @@ class SolicitudAccesoColaborador(models.Model):
         return self.colaborador.nombre
 
     class Meta:
-        verbose_name = 'Solicitud de acceso'
-        verbose_name_plural = 'Solicitudes de acceso'
+        verbose_name = 'Petición de ayuda'
+        verbose_name_plural = 'Peticiones de ayuda'

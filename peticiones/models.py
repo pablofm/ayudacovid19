@@ -60,5 +60,5 @@ class SolicitudAccesoPeticion(models.Model):
         return self.peticion.nombre
 
     class Meta:
-        verbose_name = 'Solicitud de acceso'
-        verbose_name_plural = 'Solicitudes de acceso'
+        verbose_name = 'Oferta de colaboración'
+        verbose_name_plural = 'Ofertas de colaboración'

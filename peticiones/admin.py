@@ -10,8 +10,9 @@ class PeticionAdmin(admin.OSMGeoAdmin):
 class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
     exclude = ['peticion']
     list_display = (
-        'nombre',
         'id',
+        'nombre',
+        'get_nombre_necesitado',
         'acceso_permitido',
         'codigo_acceso',
         'creacion',
