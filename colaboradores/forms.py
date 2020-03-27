@@ -3,7 +3,7 @@ from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
 from django.core.validators import RegexValidator
 from colaboradores.models import Colaborador, SolicitudAccesoColaborador
-from base.emails import enviar_correo_pidiendo_ayuda
+from base.emails import enviar_correo_pidiendo_ayuda, enviar_correo_nuevo_colaborador, enviar_correo_nueva_solicitud_colaborador
 
 validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 
@@ -31,6 +31,7 @@ class ColaboradorForm(forms.ModelForm):
         m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
             m.save()
+        enviar_correo_nuevo_colaborador()
         return m
 
     class Meta:
@@ -56,6 +57,7 @@ class ContactarColaboradorForm(forms.ModelForm):
             'enlace': contacto.url_autorizacion()
         }
         enviar_correo_pidiendo_ayuda(datos_email)
+        enviar_correo_nueva_solicitud_colaborador()
         return contacto
 
     class Meta:

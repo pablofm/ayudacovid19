@@ -49,6 +49,8 @@ INSTALLED_APPS = [
 
 SITE_ID = 1
 
+ADMINS = [('Admin', 'admin@ayudacovid19.com')]
+
 MIDDLEWARE = [
     'django.middleware.security.SecurityMiddleware',
     'django.contrib.sessions.middleware.SessionMiddleware',

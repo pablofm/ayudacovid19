@@ -2,7 +2,7 @@ from django.contrib.gis import forms
 from peticiones.models import Peticion, SolicitudAccesoPeticion
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
-from base.emails import enviar_correo_ofreciendo_ayuda
+from base.emails import enviar_correo_ofreciendo_ayuda, enviar_correo_nueva_peticion, enviar_correo_nueva_solicitud_peticion
 
 
 class PeticionForm(forms.ModelForm):
@@ -28,6 +28,7 @@ class PeticionForm(forms.ModelForm):
         m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
             m.save()
+        enviar_correo_nueva_peticion()
         return m
 
     class Meta:
@@ -52,6 +53,7 @@ class ContactarPeticionForm(forms.ModelForm):
             'enlace': contacto.url_autorizacion()
         }
         enviar_correo_ofreciendo_ayuda(datos_email)
+        enviar_correo_nueva_solicitud_peticion()
         return contacto
 
     class Meta:
