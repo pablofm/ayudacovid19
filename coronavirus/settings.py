@@ -140,7 +140,7 @@ if ON_PROD:
     X_FRAME_OPTIONS = 'DENY'
 
 if ON_PROD:
-    EMAIL_BACKEND = 'djcelery_email.backends.CeleryEmailBackend'
+    EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
     EMAIL_USE_SSL = os.environ['EMAIL_USE_SSL']
     EMAIL_HOST = os.environ['EMAIL_HOST']
     EMAIL_PORT = os.environ['EMAIL_PORT']
