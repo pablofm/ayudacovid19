@@ -38,7 +38,6 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'django.contrib.gis',
     'django.contrib.sites',
-    'djcelery_email',
     'rest_framework',
     'rest_framework_gis',
     'base',

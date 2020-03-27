@@ -1,8 +1,10 @@
 from django.template import loader
 from django.core.mail import send_mail, mail_admins
 from django.conf import settings
+from celery import shared_task
 
 
+@shared_task
 def enviar_correo_pidiendo_ayuda(datos):
     '''
     Datos proporcionados:
@@ -28,8 +30,10 @@ def enviar_correo_pidiendo_ayuda(datos):
     """.format(datos["colaborador"], datos["nombre"], datos["mensaje"], datos["enlace"])
     html_message = loader.render_to_string('base/emails/peticion_ayuda.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email"],), fail_silently=True, html_message=html_message)
+    return None
 
 
+@shared_task
 def enviar_correo_ofreciendo_ayuda(datos):
     '''
     Datos proporcionados:
@@ -40,7 +44,6 @@ def enviar_correo_ofreciendo_ayuda(datos):
         'mensaje':  Mensaje de la persona que ofrece ayuda
         'enlace': Enlace para validar el acceso
     '''
-
     asunto = "{} quiere ayudarte".format(datos["nombre"])
     plain_message = """
         Hola {0},
@@ -56,8 +59,10 @@ def enviar_correo_ofreciendo_ayuda(datos):
     """.format(datos["peticion"], datos["nombre"], datos["mensaje"], datos["enlace"])
     html_message = loader.render_to_string('base/emails/ofrecimiento_ayuda.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email"],), fail_silently=True, html_message=html_message)
+    return None
 
 
+@shared_task
 def enviar_correo_acceso_datos(datos):
     '''
     Datos proporcionados:
@@ -83,27 +88,36 @@ def enviar_correo_acceso_datos(datos):
         datos["nombre_para"], datos["nombre_contacto"], datos["telefono_contacto"], datos["email_contacto"], datos["mensaje_contacto"])
     html_message = loader.render_to_string('base/emails/acceso_datos.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email_para"],), fail_silently=True, html_message=html_message)
+    return None
 
 
+@shared_task
 def enviar_correo_nuevo_colaborador():
     asunto = "[ayudacovid19] Se ha creado unn nuevo colaborador"
     mensaje = "Se ha creado unn nuevo colaborador"
     mail_admins(asunto, mensaje, fail_silently=True)
+    return None
 
 
+@shared_task
 def enviar_correo_nueva_solicitud_colaborador():
     asunto = "[ayudacovid19] Se ha solicitado un nuevo acceso a los datos de un colaborador"
     mensaje = "Se ha solicitado un nuevo acceso a los datos de un colaborador"
     mail_admins(asunto, mensaje, fail_silently=True)
+    return None
 
 
+@shared_task
 def enviar_correo_nueva_peticion():
     asunto = "[ayudacovid19] Se ha creado una nueva peticion"
     mensaje = "Se ha creado una nueva peticion"
     mail_admins(asunto, mensaje, fail_silently=True)
+    return None
 
 
+@shared_task
 def enviar_correo_nueva_solicitud_peticion():
     asunto = "[ayudacovid19] Se ha solicitado un nuevo acceso a los datos de una petición"
     mensaje = "Se ha solicitado un nuevo acceso a los datos de una petición"
     mail_admins(asunto, mensaje, fail_silently=True)
+    return None

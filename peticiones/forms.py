@@ -28,7 +28,7 @@ class PeticionForm(forms.ModelForm):
         m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
             m.save()
-        enviar_correo_nueva_peticion()
+        enviar_correo_nueva_peticion.delay()
         return m
 
     class Meta:
@@ -52,8 +52,8 @@ class ContactarPeticionForm(forms.ModelForm):
             'mensaje':  contacto.mensaje,
             'enlace': contacto.url_autorizacion()
         }
-        enviar_correo_ofreciendo_ayuda(datos_email)
-        enviar_correo_nueva_solicitud_peticion()
+        enviar_correo_ofreciendo_ayuda.delay(datos_email)
+        enviar_correo_nueva_solicitud_peticion.delay()
         return contacto
 
     class Meta:

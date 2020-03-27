@@ -57,7 +57,7 @@ def permitirContacto(request):
             'email_contacto': solicitud.email,
             'mensaje_contacto': solicitud.mensaje,
         }
-        enviar_correo_acceso_datos(datos_email_colaborador)
+        enviar_correo_acceso_datos.delay(datos_email_colaborador)
         # El segundo para la persona necesitada, con los datos de la persona que le ofrece ayuda
 
         datos_email_solicitante = {
@@ -68,6 +68,6 @@ def permitirContacto(request):
             'email_contacto': solicitud.colaborador.email,
             'mensaje_contacto': solicitud.colaborador.mensaje
         }
-        enviar_correo_acceso_datos(datos_email_solicitante)
+        enviar_correo_acceso_datos.delay(datos_email_solicitante)
 
     return render(request, 'base/validar_codigo.html', {"nombre": nombre, "permitido": permitido})

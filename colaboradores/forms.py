@@ -31,7 +31,7 @@ class ColaboradorForm(forms.ModelForm):
         m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
             m.save()
-        enviar_correo_nuevo_colaborador()
+        enviar_correo_nuevo_colaborador.delay()
         return m
 
     class Meta:
@@ -56,8 +56,8 @@ class ContactarColaboradorForm(forms.ModelForm):
             'mensaje':  contacto.mensaje,
             'enlace': contacto.url_autorizacion()
         }
-        enviar_correo_pidiendo_ayuda(datos_email)
-        enviar_correo_nueva_solicitud_colaborador()
+        enviar_correo_pidiendo_ayuda.delay(datos_email)
+        enviar_correo_nueva_solicitud_colaborador.delay()
         return contacto
 
     class Meta:
