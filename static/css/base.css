@@ -20,6 +20,6 @@ html, body {
     margin-right: 0.2em;
 }
 
-.colabora, .pide{
-    padding-top: 70px;
-}
+.cabecera_ul{
+    padding-left: 20px;
+ }

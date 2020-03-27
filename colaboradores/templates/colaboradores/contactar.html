@@ -3,12 +3,6 @@
 
 {% block content %}
 <div class="container">
-    <div class="row colabora">
-        <div class="col-12">
-            <h1>Contactar con {{colaborador.nombre}}</h1>
-            <p>Indícanos tus datos y avisaremos a {{colaborador.nombre}} para que nos de permiso para compartir los suyos</p>
-        </div>
-    </div>
     <div class="row">
         <div class="col-12">
             {% bootstrap_form_errors form %}
@@ -16,7 +10,12 @@
     </div>
     <div class="row">
         <div class="col-12 col-lg-6">
-            <div id="mapa_colaborador"></div>
+            <h2 class="cabecera_ul">Datos de contacto</h2>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item"><strong>Nombre:</strong> {{colaborador.nombre}}</li>
+                <li class="list-group-item"><strong>Mensaje:</strong> {{colaborador.mensaje}}</li>
+                <li class="list-group-item"><strong>Ubicación:</strong> <div id="mapa_colaborador"></div></li>
+            </ul>
             <script>
                 var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                 var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
@@ -27,9 +26,12 @@
                 var lon = {{colaborador.get_lon_js}};
                 L.marker([lat, lon], {icon: greenIcon}).addTo(map);
                 map.setView(new L.LatLng(lat,lon),14);
+                resize();
             </script>
         </div>
         <div class="col-12 col-lg-6">
+            <h2>Tus datos</h2>
+            <p>Indícanos tus datos y avisaremos a {{colaborador.nombre}} para que nos autorice a compartir los suyos</p>
             <form method="post" class="form">
                 {% csrf_token %}
                 <input type="hidden" name="id_colaborador" id="id_colaborador" value="{{colaborador.id}}" novalidate>

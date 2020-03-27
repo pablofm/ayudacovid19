@@ -3,8 +3,8 @@
 
 {% block content %}
 <div class="container">
-    <div class="row pide">
-        <div class="col-12"><h1>Solicita ayuda</h1></div>
+    <div class="row">
+        <div class="col-12"><h2>Solicita ayuda</h2></div>
     </div>
     <div class="row">
         <div class="col-12">
@@ -36,8 +36,8 @@
 
                     map_mark(map, redIcon, lat, lon);
                 });
-
                 map_mark_current_location(map, redIcon);
+                resize();
             </script>
         </div>
         <div class="col-12 col-lg-6">
