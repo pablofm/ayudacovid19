@@ -36,30 +36,10 @@
       })();
     </script>
     <!-- End Matomo Code -->
-    <script src="https://kit.fontawesome.com/20930eb496.js" crossorigin="anonymous"></script>
 </head>
 <body>
     <header>
-        <nav class="navbar fixed-top navbar-expand-md navbar-dark bg-dark">
-            <div class="navbar-collapse collapse w-100 order-1 order-md-0 dual-collapse2">
-                <ul class="navbar-nav mr-auto">
-                    <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'colaborador-add' %}">Colabora</a></li>
-                    <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'peticion-add' %}">Pide</a></li>
-                    <li class="nav-item accion"><a class="nav-link" href="https://github.com/pablofm/ayudacovid19"><i class="fab fa-github"></i> Colabora en Github</a></li>
-                </ul>
-            </div>
-            <div class="mx-auto order-0">
-                <a class="navbar-brand" href="{% url 'index' %}">Ayuda durante COVID-19</a>
-                <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".dual-collapse2">
-                    <span class="navbar-toggler-icon"></span>
-                </button>
-            </div>
-            <div class="navbar-collapse collapse w-100 order-3 dual-collapse2">
-                <ul class="navbar-nav ml-auto">
-                    <li class="nav-item"><a class="nav-link disabled" href="#"> En total hay {{colaboradores}} colaboradores y {{peticiones}} peticiones de ayuda. </a></li>
-                </ul>
-            </div>
-        </nav>
+        {% include "base/navbar.html" %}
     </header>
     <main>
         {% block content %}
