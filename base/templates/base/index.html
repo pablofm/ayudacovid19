@@ -91,8 +91,9 @@
                         markers.addTo(map);
 
                         var controles = {
-                            "Colaboradores": colaboradores,
-                            "Peticiones": peticiones
+
+                            '<img height="20" src="{% static "img/marker-icon-green.png" %}"/> Colaboradores' : colaboradores,
+                            '<img height="20" src="{% static "img/marker-icon-red.png" %}"/> Peticiones': peticiones
                         };
                         L.control.layers(null, controles, {"collapsed": false}).addTo(map);
                         resize();
