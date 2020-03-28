@@ -24,12 +24,12 @@ class PeticionForm(forms.ModelForm):
         return True
 
     def save(self, commit=True):
-        m = super(PeticionForm, self).save(commit=False)
-        m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
+        peticion = super(PeticionForm, self).save(commit=False)
+        peticion.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
-            m.save()
+            peticion.save()
         enviar_correo_nueva_peticion.delay()
-        return m
+        return peticion
 
     class Meta:
         model = Peticion

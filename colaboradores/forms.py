@@ -27,12 +27,12 @@ class ColaboradorForm(forms.ModelForm):
         return True
 
     def save(self, commit=True):
-        m = super(ColaboradorForm, self).save(commit=False)
-        m.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
+        colaborador = super(ColaboradorForm, self).save(commit=False)
+        colaborador.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
         if commit:
-            m.save()
+            colaborador.save()
         enviar_correo_nuevo_colaborador.delay()
-        return m
+        return colaborador
 
     class Meta:
         model = Colaborador
@@ -41,7 +41,6 @@ class ColaboradorForm(forms.ModelForm):
 
 
 class ContactarColaboradorForm(forms.ModelForm):
-
     id_colaborador = forms.IntegerField(required=False)
 
     def save(self):
