@@ -40,10 +40,11 @@ INSTALLED_APPS = [
     'django.contrib.sites',
     'rest_framework',
     'rest_framework_gis',
+    'bootstrap4',
     'base',
     'colaboradores',
     'peticiones',
-    'bootstrap4',
+    'fuentes',
 ]
 
 SITE_ID = 1
