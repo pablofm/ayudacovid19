@@ -4,7 +4,7 @@ from shortuuidfield import ShortUUIDField
 from django.urls import reverse
 from django.contrib.sites.models import Site
 
-validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
+validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7|9)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 
 
 class Peticion(models.Model):

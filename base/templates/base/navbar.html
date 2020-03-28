@@ -8,8 +8,8 @@
 
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'colaborador-add' %}">Colabora</a></li>
-        <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'peticion-add' %}">Pide</a></li>
+        <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'crear-colaborador' %}">Colabora</a></li>
+        <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'crear-peticion' %}">Pide</a></li>
         <li class="nav-item accion"><a class="nav-link" href="https://github.com/pablofm/ayudacovid19">Colabora en <img height="24" src="{% static "img/GitHub_Logo_White.png" %}"/></a></li>
     </ul>
     <p class="nav navbar-text">Colaboradores: {{colaboradores}} | Peticiones de ayuda: {{peticiones}}</p> 
