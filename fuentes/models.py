@@ -7,3 +7,6 @@ class Fuente(models.Model):
     fuente = models.CharField(max_length=500)
     accion = models.CharField(max_length=500)
     contador = models.IntegerField(default=0)
+
+    def __str__(self):
+        return "{} - {}".format(self.fuente, self.accion)

@@ -1,18 +1,27 @@
-from peticiones.models import Peticion
-from peticiones.serializers import PeticionSerializer
 from rest_framework import viewsets
+from rest_framework import mixins
+from peticiones.models import Peticion, SolicitudAccesoPeticion
+from peticiones.serializers import PeticionListSerializer, PeticionSerializer, SolicitudAccesoPeticionSerializer
 from django.views.generic.edit import CreateView
 from peticiones.forms import PeticionForm, ContactarPeticionForm
-from peticiones.models import SolicitudAccesoPeticion
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from base.emails import enviar_correo_acceso_datos
 
 
-class APIColaboradoresView(viewsets.ReadOnlyModelViewSet):
+class APIColaboradoresView(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
     queryset = Peticion.objects.all()
-    serializer_class = PeticionSerializer
+
+    def get_serializer_class(self, *args, **kwargs):
+        if self.request.method == 'POST':
+            return PeticionSerializer
+        return PeticionListSerializer
+
+
+class APIContactoPeticionView(mixins.CreateModelMixin, viewsets.GenericViewSet):
+    queryset = SolicitudAccesoPeticion.objects.all()
+    serializer_class = SolicitudAccesoPeticionSerializer
 
 
 class CrearPeticionView(CreateView):

@@ -5,7 +5,7 @@ from django.urls import reverse
 from django.contrib.sites.models import Site
 from datetime import datetime
 
-validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
+validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7|9)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 detault_datetime = datetime(2000, 1, 1, 0, 0, 0, 0)
 
 
