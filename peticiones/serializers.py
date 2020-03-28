@@ -30,4 +30,4 @@ class PeticionSerializer(GeoFeatureModelSerializer):
 class SolicitudAccesoPeticionSerializer(serializers.ModelSerializer):
     class Meta:
         model = SolicitudAccesoPeticion
-        exclude = ("acceso_permitido",)
+        exclude = ("acceso_permitido", )
