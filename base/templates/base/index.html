@@ -80,8 +80,8 @@
 
                         var markers = L.markerClusterGroup.layerSupport(null);
 
-                        var colaboradores = get_colaboradores('{% url "colaborador-list" %}', '{% url "contactar-colaborador" 0 %}' );
-                        var peticiones = get_peticiones('{% url "peticion-list" %}', '{% url "contactar-peticion" 0 %}');
+                        var colaboradores = get_colaboradores('{% url "colaborador-list" %}', '{% url "acceso-colaborador" 0 %}' );
+                        var peticiones = get_peticiones('{% url "peticion-list" %}', '{% url "acceso-peticion" 0 %}');
                         
                         markers.checkIn(colaboradores);
                         markers.checkIn(peticiones);
