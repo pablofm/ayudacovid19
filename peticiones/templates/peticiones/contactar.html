@@ -22,8 +22,8 @@
                 var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
                 var map = new L.Map('mapa_colaborador');
                 map.addLayer(osm);
-                var lat = {{peticion.get_lat_js}};
-                var lon = {{peticion.get_lon_js}};
+                var lat = parseFloat({{colaborador.geom.y}});
+                var lon = parseFloat({{colaborador.geom.x}});
                 L.marker([lat, lon], {icon: redIcon}).addTo(map);
                 map.setView(new L.LatLng(lat,lon),14);
                 resize();

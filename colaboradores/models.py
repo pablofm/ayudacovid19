@@ -28,14 +28,6 @@ class Colaborador(models.Model):
     mensaje = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
     creacion = models.DateTimeField(auto_now_add=True)
 
-    def get_lat_js(self):
-        lat_str = str(self.geom.y)
-        return lat_str
-
-    def get_lon_js(self):
-        lon_str = str(self.geom.x)
-        return lon_str
-
     def __str__(self):
         return self.nombre
 
