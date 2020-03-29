@@ -33,19 +33,7 @@ class SolicitudAccesoPeticion(models.Model):
     codigo_acceso = ShortUUIDField()
     creacion = models.DateTimeField(auto_now_add=True)
 
-    def get_nombre_necesitado(self):
-        return self.peticion.nombre
-
-    def get_telefono_necesitado(self):
-        return self.peticion.telefono
-
-    def get_email_necesitado(self):
-        return self.peticion.email
-
-    def get_mensaje_necesitado(self):
-        return self.peticion.mensaje
-
-    def url_autorizacion(self):
+    def get_url_autorizacion(self):
         return "http://{0}{1}?codigo={2}".format(Site.objects.get_current(), reverse("validar-acceso-peticion"), self.codigo_acceso)
 
     def __str__(self):

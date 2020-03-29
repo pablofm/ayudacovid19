@@ -8,33 +8,45 @@ class PeticionAdmin(admin.OSMGeoAdmin):
 
 
 class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
+    def nombre_necesitado(self, obj):
+        return obj.peticion.nombre
+
+    def telefono_necesitado(self, obj):
+        return obj.peticion.telefono
+
+    def email_necesitado(self, obj):
+        return obj.peticion.email
+
+    def mensaje_necesitado(self, obj):
+        return obj.peticion.mensaje
+
     exclude = ['peticion']
     list_display = (
         'id',
         'nombre',
-        'get_nombre_necesitado',
+        'nombre_necesitado',
         'acceso_permitido',
         'codigo_acceso',
         'creacion',
     )
     readonly_fields = (
         'codigo_acceso',
-        'url_autorizacion',
-        'get_nombre_necesitado',
-        'get_telefono_necesitado',
-        'get_email_necesitado',
-        'get_mensaje_necesitado',
+        'get_url_autorizacion',
+        'nombre_necesitado',
+        'telefono_necesitado',
+        'email_necesitado',
+        'mensaje_necesitado',
         'creacion'
     )
     fieldsets = (
         ('Datos de la petición', {
             'fields': (
-                'get_nombre_necesitado',
-                'get_telefono_necesitado',
-                'get_email_necesitado',
-                'get_mensaje_necesitado',
+                'nombre_necesitado',
+                'telefono_necesitado',
+                'email_necesitado',
+                'mensaje_necesitado',
                 'codigo_acceso',
-                'url_autorizacion',
+                'get_url_autorizacion',
                 'acceso_permitido',
             ),
         }),

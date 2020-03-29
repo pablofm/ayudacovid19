@@ -46,22 +46,7 @@ class SolicitudAccesoColaborador(models.Model):
     codigo_acceso = ShortUUIDField()
     creacion = models.DateTimeField(auto_now_add=True)
 
-    def get_nombre_colaborador(self):
-        return self.colaborador.nombre
-
-    def get_telefono_colaborador(self):
-        return self.colaborador.telefono
-
-    def get_email_colaborador(self):
-        return self.colaborador.email
-
-    def get_horario_colaborador(self):
-        return self.colaborador.get_horario_display()
-
-    def get_mensaje_colaborador(self):
-        return self.colaborador.mensaje
-
-    def url_autorizacion(self):
+    def get_url_autorizacion(self):
         return "http://{0}{1}?codigo={2}".format(Site.objects.get_current(), reverse("validar-acceso-colaborador"), self.codigo_acceso)
 
     def __str__(self):

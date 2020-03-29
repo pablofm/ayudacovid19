@@ -8,11 +8,26 @@ class ColaboradorAdmin(admin.OSMGeoAdmin):
 
 
 class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
+    def nombre_colaborador(self, obj):
+        return obj.colaborador.nombre
+
+    def telefono_colaborador(self, obj):
+        return obj.colaborador.telefono
+
+    def email_colaborador(self, obj):
+        return obj.colaborador.email
+
+    def horario_colaborador(self, obj):
+        return obj.colaborador.get_horario_display()
+
+    def mensaje_colaborador(self, obj):
+        return obj.colaborador.mensaje
+
     exclude = ['colaborador']
     list_display = (
         'id',
         'nombre',
-        'get_nombre_colaborador',
+        'nombre_colaborador',
         'acceso_permitido',
         'codigo_acceso',
         'creacion',
@@ -20,25 +35,25 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
 
     readonly_fields = (
         'codigo_acceso',
-        'url_autorizacion',
-        'get_nombre_colaborador',
-        'get_telefono_colaborador',
-        'get_email_colaborador',
-        'get_horario_colaborador',
-        'get_mensaje_colaborador',
+        'get_url_autorizacion',
+        'nombre_colaborador',
+        'telefono_colaborador',
+        'email_colaborador',
+        'horario_colaborador',
+        'mensaje_colaborador',
         'creacion',
     )
 
     fieldsets = (
         ('Datos del Colaborador', {
             'fields': (
-                'get_nombre_colaborador',
-                'get_telefono_colaborador',
-                'get_email_colaborador',
-                'get_horario_colaborador',
-                'get_mensaje_colaborador',
+                'nombre_colaborador',
+                'telefono_colaborador',
+                'email_colaborador',
+                'horario_colaborador',
+                'mensaje_colaborador',
                 'codigo_acceso',
-                'url_autorizacion',
+                'get_url_autorizacion',
                 'acceso_permitido',
             ),
         }),
