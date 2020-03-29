@@ -1,29 +1,10 @@
-from rest_framework import viewsets
-from rest_framework import mixins
 from colaboradores.models import Colaborador, SolicitudAccesoColaborador
-from colaboradores.serializers import ColaboradorSerializer, ColaboradorListSerializer, SolicitudAccesoColaboradorSerializer
-
-
 from django.views.generic.edit import CreateView
 from colaboradores.forms import ContactarColaboradorForm, ColaboradorForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from base.emails import enviar_correo_acceso_datos
-
-
-class APIColaboradoresView(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.GenericViewSet):
-    queryset = Colaborador.objects.all()
-
-    def get_serializer_class(self, *args, **kwargs):
-        if self.request.method == 'POST':
-            return ColaboradorSerializer
-        return ColaboradorListSerializer
-
-
-class APIContactoColaboradorView(mixins.CreateModelMixin, viewsets.GenericViewSet):
-    queryset = SolicitudAccesoColaborador.objects.all()
-    serializer_class = SolicitudAccesoColaboradorSerializer
 
 
 class CrearColaboradorView(CreateView):
