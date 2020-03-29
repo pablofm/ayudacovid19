@@ -5,9 +5,8 @@ from celery import shared_task
 
 
 @shared_task
-def enviar_correo_pidiendo_ayuda(datos):
+def enviar_correo_pidiendo_ayuda(contacto):
     '''
-    Datos proporcionados:
     Diccionario con las claves:
         'colaborador':  nombre del colaborador
         'email': email del colaborador
@@ -15,6 +14,14 @@ def enviar_correo_pidiendo_ayuda(datos):
         'mensaje':  Mensaje de la persona que solicita ayuda
         'enlace': Enlace para validar el acceso
     '''
+    datos = {
+        'colaborador':  contacto.colaborador.nombre,
+        'email': contacto.colaborador.email,
+        'nombre':  contacto.nombre,
+        'mensaje':  contacto.mensaje,
+        'enlace': contacto.url_autorizacion()
+    }
+
     asunto = "{} te necesita".format(datos["nombre"])
     plain_message = """
         Hola {0},
@@ -34,9 +41,8 @@ def enviar_correo_pidiendo_ayuda(datos):
 
 
 @shared_task
-def enviar_correo_ofreciendo_ayuda(datos):
+def enviar_correo_ofreciendo_ayuda(contacto):
     '''
-    Datos proporcionados:
     Diccionario con las claves:
         'peticion':  nombre de la persona necesitada
         'email': email de la persona necesitada
@@ -44,6 +50,13 @@ def enviar_correo_ofreciendo_ayuda(datos):
         'mensaje':  Mensaje de la persona que ofrece ayuda
         'enlace': Enlace para validar el acceso
     '''
+    datos = {
+        'peticion':  contacto.peticion.nombre,
+        'email': contacto.peticion.email,
+        'nombre':  contacto.nombre,
+        'mensaje':  contacto.mensaje,
+        'enlace': contacto.url_autorizacion()
+    }
     asunto = "{} quiere ayudarte".format(datos["nombre"])
     plain_message = """
         Hola {0},

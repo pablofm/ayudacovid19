@@ -2,7 +2,9 @@ from django.contrib.gis import forms
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
 from colaboradores.models import Colaborador, SolicitudAccesoColaborador
-from base.emails import enviar_correo_pidiendo_ayuda, enviar_correo_nuevo_colaborador, enviar_correo_nueva_solicitud_colaborador
+from base.emails import enviar_correo_pidiendo_ayuda
+from base.emails import enviar_correo_nuevo_colaborador
+from base.emails import enviar_correo_nueva_solicitud_colaborador
 
 
 class ColaboradorForm(forms.ModelForm):
@@ -45,15 +47,8 @@ class ContactarColaboradorForm(forms.ModelForm):
         contacto.colaborador = Colaborador.objects.get(pk=self.cleaned_data['id_colaborador'])
         contacto.save()
         # Se envía un correo donde alquien que necesita ayuda solicita el acceso a los datos un colaborador.
-        datos_email = {
-            'colaborador':  contacto.colaborador.nombre,
-            'email': contacto.colaborador.email,
-            'nombre':  contacto.nombre,
-            'mensaje':  contacto.mensaje,
-            'enlace': contacto.url_autorizacion()
-        }
-        enviar_correo_pidiendo_ayuda.delay(datos_email)
         enviar_correo_nueva_solicitud_colaborador.delay()
+        enviar_correo_pidiendo_ayuda.delay(contacto)
         return contacto
 
     class Meta:
