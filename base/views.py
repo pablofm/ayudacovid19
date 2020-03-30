@@ -3,6 +3,7 @@ from colaboradores.models import Colaborador
 from peticiones.models import Peticion
 from comercios.models import Comercio
 
+
 class HomeView(TemplateView):
     template_name = 'base/index.html'
 

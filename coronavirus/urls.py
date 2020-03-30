@@ -11,7 +11,7 @@ urlpatterns = [
     path('', include(colaboradores_urls)),
     path('', include(peticiones_urls)),
     path('', include(comercios_urls)),
-    ]
+]
 
 admin.site.site_header = 'Ayuda durante COVID-19'
 admin.site.index_title = 'Herramientas de administración'

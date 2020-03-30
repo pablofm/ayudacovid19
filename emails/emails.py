@@ -21,10 +21,10 @@ def enviar_correo_pidiendo_ayuda(contacto_pk):
     '''
     solicitud = get_object_or_404(SolicitudAccesoColaborador, pk=contacto_pk)
     datos = {
-        'colaborador':  solicitud.colaborador.nombre,
+        'colaborador': solicitud.colaborador.nombre,
         'email': solicitud.colaborador.email,
-        'nombre':  solicitud.nombre,
-        'mensaje':  solicitud.mensaje,
+        'nombre': solicitud.nombre,
+        'mensaje': solicitud.mensaje,
         'enlace': get_url_autorizacion_colaborador(solicitud.codigo_acceso)
     }
     print(datos)
@@ -59,10 +59,10 @@ def enviar_correo_ofreciendo_ayuda(contacto_pk):
     '''
     solicitud = get_object_or_404(SolicitudAccesoPeticion, pk=contacto_pk)
     datos = {
-        'peticion':  solicitud.peticion.nombre,
+        'peticion': solicitud.peticion.nombre,
         'email': solicitud.peticion.email,
-        'nombre':  solicitud.nombre,
-        'mensaje':  solicitud.mensaje,
+        'nombre': solicitud.nombre,
+        'mensaje': solicitud.mensaje,
         'enlace': get_url_autorizacion_peticion(solicitud.codigo_acceso)
     }
     asunto = "{} quiere ayudarte".format(datos["nombre"])
