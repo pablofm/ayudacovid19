@@ -4,7 +4,7 @@ from peticiones.forms import PeticionForm, ContactarPeticionForm
 from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
-from base.emails import enviar_correo_acceso_datos
+from emails.emails import enviar_correo_acceso_datos
 
 
 class CrearPeticionView(CreateView):

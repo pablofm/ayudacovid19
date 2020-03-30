@@ -1,5 +1,6 @@
 from django.contrib.gis import admin
 from peticiones.models import Peticion, SolicitudAccesoPeticion
+from emails.aux import get_url_autorizacion_peticion
 
 
 class PeticionAdmin(admin.OSMGeoAdmin):
@@ -20,6 +21,9 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
     def mensaje_necesitado(self, obj):
         return obj.peticion.mensaje
 
+    def url_autorizacion(self, obj):
+        return get_url_autorizacion_peticion(obj.codigo_acceso)
+
     exclude = ['peticion']
     list_display = (
         'id',
@@ -31,7 +35,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
     )
     readonly_fields = (
         'codigo_acceso',
-        'get_url_autorizacion',
+        'url_autorizacion',
         'nombre_necesitado',
         'telefono_necesitado',
         'email_necesitado',
@@ -46,7 +50,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
                 'email_necesitado',
                 'mensaje_necesitado',
                 'codigo_acceso',
-                'get_url_autorizacion',
+                'url_autorizacion',
                 'acceso_permitido',
             ),
         }),

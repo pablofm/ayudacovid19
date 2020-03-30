@@ -1,8 +1,6 @@
 from django.contrib.gis.db import models
 from django.core.validators import RegexValidator
 from shortuuidfield import ShortUUIDField
-from django.urls import reverse
-from django.contrib.sites.models import Site
 
 validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7|9)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
 
@@ -32,9 +30,6 @@ class SolicitudAccesoPeticion(models.Model):
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()
     creacion = models.DateTimeField(auto_now_add=True)
-
-    def get_url_autorizacion(self):
-        return "http://{0}{1}?codigo={2}".format(Site.objects.get_current(), reverse("validar-acceso-peticion"), self.codigo_acceso)
 
     def __str__(self):
         return self.peticion.nombre

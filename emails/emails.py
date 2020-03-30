@@ -2,10 +2,15 @@ from django.template import loader
 from django.core.mail import send_mail, mail_admins
 from django.conf import settings
 from celery import shared_task
+from emails.aux import get_url_autorizacion_colaborador
+from emails.aux import get_url_autorizacion_peticion
+from django.shortcuts import get_object_or_404
+from colaboradores.models import SolicitudAccesoColaborador
+from peticiones.models import SolicitudAccesoPeticion
 
 
 @shared_task
-def enviar_correo_pidiendo_ayuda(contacto):
+def enviar_correo_pidiendo_ayuda(contacto_pk):
     '''
     Diccionario con las claves:
         'colaborador':  nombre del colaborador
@@ -14,13 +19,15 @@ def enviar_correo_pidiendo_ayuda(contacto):
         'mensaje':  Mensaje de la persona que solicita ayuda
         'enlace': Enlace para validar el acceso
     '''
+    solicitud = get_object_or_404(SolicitudAccesoColaborador, pk=contacto_pk)
     datos = {
-        'colaborador':  contacto.colaborador.nombre,
-        'email': contacto.colaborador.email,
-        'nombre':  contacto.nombre,
-        'mensaje':  contacto.mensaje,
-        'enlace': contacto.url_autorizacion()
+        'colaborador':  solicitud.colaborador.nombre,
+        'email': solicitud.colaborador.email,
+        'nombre':  solicitud.nombre,
+        'mensaje':  solicitud.mensaje,
+        'enlace': get_url_autorizacion_colaborador(solicitud.codigo_acceso)
     }
+    print(datos)
 
     asunto = "{} te necesita".format(datos["nombre"])
     plain_message = """
@@ -35,13 +42,13 @@ def enviar_correo_pidiendo_ayuda(contacto):
         Un saludo y que tengas un buen día.
         #QUEDATEENCASA
     """.format(datos["colaborador"], datos["nombre"], datos["mensaje"], datos["enlace"])
-    html_message = loader.render_to_string('base/emails/peticion_ayuda.html', datos)
+    html_message = loader.render_to_string('emails/peticion_ayuda.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email"],), fail_silently=True, html_message=html_message)
     return None
 
 
 @shared_task
-def enviar_correo_ofreciendo_ayuda(contacto):
+def enviar_correo_ofreciendo_ayuda(contacto_pk):
     '''
     Diccionario con las claves:
         'peticion':  nombre de la persona necesitada
@@ -50,12 +57,13 @@ def enviar_correo_ofreciendo_ayuda(contacto):
         'mensaje':  Mensaje de la persona que ofrece ayuda
         'enlace': Enlace para validar el acceso
     '''
+    solicitud = get_object_or_404(SolicitudAccesoPeticion, pk=contacto_pk)
     datos = {
-        'peticion':  contacto.peticion.nombre,
-        'email': contacto.peticion.email,
-        'nombre':  contacto.nombre,
-        'mensaje':  contacto.mensaje,
-        'enlace': contacto.url_autorizacion()
+        'peticion':  solicitud.peticion.nombre,
+        'email': solicitud.peticion.email,
+        'nombre':  solicitud.nombre,
+        'mensaje':  solicitud.mensaje,
+        'enlace': get_url_autorizacion_peticion(solicitud.codigo_acceso)
     }
     asunto = "{} quiere ayudarte".format(datos["nombre"])
     plain_message = """
@@ -70,7 +78,7 @@ def enviar_correo_ofreciendo_ayuda(contacto):
         Un saludo y que tengas un buen día.
         #QUEDATEENCASA
     """.format(datos["peticion"], datos["nombre"], datos["mensaje"], datos["enlace"])
-    html_message = loader.render_to_string('base/emails/ofrecimiento_ayuda.html', datos)
+    html_message = loader.render_to_string('emails/ofrecimiento_ayuda.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email"],), fail_silently=True, html_message=html_message)
     return None
 
@@ -99,7 +107,7 @@ def enviar_correo_acceso_datos(datos):
         #QUEDATEENCASA
     """.format(
         datos["nombre_para"], datos["nombre_contacto"], datos["telefono_contacto"], datos["email_contacto"], datos["mensaje_contacto"])
-    html_message = loader.render_to_string('base/emails/acceso_datos.html', datos)
+    html_message = loader.render_to_string('emails/acceso_datos.html', datos)
     send_mail(asunto, plain_message, settings.EMAIL_HOST_USER, (datos["email_para"],), fail_silently=True, html_message=html_message)
     return None
 
@@ -107,7 +115,7 @@ def enviar_correo_acceso_datos(datos):
 @shared_task
 def enviar_correo_nuevo_colaborador():
     asunto = "[ayudacovid19] Se ha creado unn nuevo colaborador"
-    mensaje = "Se ha creado unn nuevo colaborador"
+    mensaje = "Se ha creado un nuevo colaborador"
     mail_admins(asunto, mensaje, fail_silently=True)
     return None
 

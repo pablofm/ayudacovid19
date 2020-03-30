@@ -45,6 +45,7 @@ INSTALLED_APPS = [
     'colaboradores',
     'peticiones',
     'fuentes',
+    'emails',
 ]
 
 SITE_ID = 1

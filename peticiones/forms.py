@@ -3,9 +3,9 @@ from peticiones.models import Peticion
 from peticiones.models import SolicitudAccesoPeticion
 from django.core.exceptions import ValidationError
 from django.contrib.gis.geos import Point
-from base.emails import enviar_correo_ofreciendo_ayuda
-from base.emails import enviar_correo_nueva_peticion
-from base.emails import enviar_correo_nueva_solicitud_peticion
+from emails.emails import enviar_correo_ofreciendo_ayuda
+from emails.emails import enviar_correo_nueva_peticion
+from emails.emails import enviar_correo_nueva_solicitud_peticion
 
 
 class PeticionForm(forms.ModelForm):
@@ -48,8 +48,8 @@ class ContactarPeticionForm(forms.ModelForm):
         contacto.peticion = Peticion.objects.get(pk=self.cleaned_data['id_peticion'])
         contacto.save()
         # Se envía un correo donde alquien quiere ayuda a una persona necesitada y solicita el acceso a sus datos.
-        enviar_correo_ofreciendo_ayuda.delay(contacto)
         enviar_correo_nueva_solicitud_peticion.delay()
+        enviar_correo_ofreciendo_ayuda.delay(contacto.pk)
         return contacto
 
     class Meta:

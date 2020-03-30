@@ -6,9 +6,9 @@ from django.urls import path
 
 router = routers.SimpleRouter()
 urlpatterns = [
-    path('peticiones/add/', peticiones_views.CrearPeticionView.as_view(), name='crear-peticion'),
-    path('peticiones/<pk>/acceso/', peticiones_views.SolicitarContactoPeticionView.as_view(), name='acceso-peticion'),
-    path('peticiones/validar/', peticiones_views.permitirContacto, name='validar-acceso-peticion'),
+    path('peticiones/add', peticiones_views.CrearPeticionView.as_view(), name='crear-peticion'),
+    path('peticiones/<pk>/acceso', peticiones_views.SolicitarContactoPeticionView.as_view(), name='acceso-peticion'),
+    path('peticiones/validar', peticiones_views.permitirContacto, name='validar-acceso-peticion'),
 ]
 
 router.register('API/peticiones', peticiones_rest.APIPeticionesView)

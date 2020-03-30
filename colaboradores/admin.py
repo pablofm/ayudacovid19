@@ -1,5 +1,6 @@
 from django.contrib.gis import admin
 from colaboradores.models import Colaborador, SolicitudAccesoColaborador
+from emails.aux import get_url_autorizacion_colaborador
 
 
 class ColaboradorAdmin(admin.OSMGeoAdmin):
@@ -23,6 +24,9 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
     def mensaje_colaborador(self, obj):
         return obj.colaborador.mensaje
 
+    def url_autorizacion(self, obj):
+        return get_url_autorizacion_colaborador(obj.codigo_acceso)
+
     exclude = ['colaborador']
     list_display = (
         'id',
@@ -35,7 +39,7 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
 
     readonly_fields = (
         'codigo_acceso',
-        'get_url_autorizacion',
+        'url_autorizacion',
         'nombre_colaborador',
         'telefono_colaborador',
         'email_colaborador',
@@ -53,7 +57,7 @@ class SolicitudAccesoColaboradorAdmin(admin.OSMGeoAdmin):
                 'horario_colaborador',
                 'mensaje_colaborador',
                 'codigo_acceso',
-                'get_url_autorizacion',
+                'url_autorizacion',
                 'acceso_permitido',
             ),
         }),

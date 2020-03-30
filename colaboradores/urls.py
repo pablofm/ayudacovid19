@@ -5,9 +5,9 @@ from rest_framework import routers
 from django.urls import path
 
 urlpatterns = [
-    path('colaboradores/add/', colaboradores_views.CrearColaboradorView.as_view(), name='crear-colaborador'),
-    path('colaboradores/<pk>/acceso/', colaboradores_views.SolicitarContactoColaboradorView.as_view(), name='acceso-colaborador'),
-    path('colaboradores/validar/', colaboradores_views.permitirContacto, name='validar-acceso-colaborador'),
+    path('colaboradores/add', colaboradores_views.CrearColaboradorView.as_view(), name='crear-colaborador'),
+    path('colaboradores/<pk>/acceso', colaboradores_views.SolicitarContactoColaboradorView.as_view(), name='acceso-colaborador'),
+    path('colaboradores/validar', colaboradores_views.permitirContacto, name='validar-acceso-colaborador'),
 ]
 
 router = routers.SimpleRouter()
