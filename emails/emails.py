@@ -114,7 +114,7 @@ def enviar_correo_acceso_datos(datos):
 
 @shared_task
 def enviar_correo_nuevo_colaborador():
-    asunto = "[ayudacovid19] Se ha creado unn nuevo colaborador"
+    asunto = "[ayudacovid19] Se ha creado un nuevo colaborador"
     mensaje = "Se ha creado un nuevo colaborador"
     mail_admins(asunto, mensaje, fail_silently=True)
     return None
@@ -140,5 +140,13 @@ def enviar_correo_nueva_peticion():
 def enviar_correo_nueva_solicitud_peticion():
     asunto = "[ayudacovid19] Se ha solicitado un nuevo acceso a los datos de una petición"
     mensaje = "Se ha solicitado un nuevo acceso a los datos de una petición"
+    mail_admins(asunto, mensaje, fail_silently=True)
+    return None
+
+
+@shared_task
+def enviar_correo_nuevo_comercio():
+    asunto = "[ayudacovid19] Se ha añadido un nuevo comercio"
+    mensaje = "Se ha añadido un nuevo comercio"
     mail_admins(asunto, mensaje, fail_silently=True)
     return None

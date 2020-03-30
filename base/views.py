@@ -1,7 +1,7 @@
 from django.views.generic import TemplateView
 from colaboradores.models import Colaborador
 from peticiones.models import Peticion
-
+from comercios.models import Comercio
 
 class HomeView(TemplateView):
     template_name = 'base/index.html'
@@ -10,6 +10,7 @@ class HomeView(TemplateView):
         context = super(HomeView, self).get_context_data(**kwargs)
         context['colaboradores'] = Colaborador.objects.count()
         context['peticiones'] = Peticion.objects.count()
+        context['comercios'] = Comercio.objects.count()
         return context
 
 

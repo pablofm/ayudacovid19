@@ -82,20 +82,24 @@
 
                         var colaboradores = get_colaboradores('{% url "colaborador-list" %}', '{% url "acceso-colaborador" 0 %}' );
                         var peticiones = get_peticiones('{% url "peticion-list" %}', '{% url "acceso-peticion" 0 %}');
+                        var comercios = get_comercios('{% url "comercio-list" %}')
                         
                         markers.checkIn(colaboradores);
                         markers.checkIn(peticiones);
+                        markers.checkIn(comercios)
                         
                         colaboradores.addTo(map);
                         peticiones.addTo(map);
+                        comercios.addTo(map);
                         
                         markers.addTo(map);
 
                         var controles = {
-
-                            '<img height="20" src="{% static "img/marker-icon-green.png" %}"/> Colaboradores' : colaboradores,
-                            '<img height="20" src="{% static "img/marker-icon-red.png" %}"/> Peticiones': peticiones
+                            "<img height='20' src='{% static 'img/marker-icon-green.png' %}'/> Colaboradores ({{colaboradores}})" : colaboradores,
+                            "<img height='20' src='{% static 'img/marker-icon-red.png' %}'/> Peticiones ({{peticiones}})" : peticiones,
+                            "<img height='20' src='{% static 'img/marker-icon-blue.png' %}'/> Comercios ({{comercios}})" : comercios
                         };
+
                         L.control.layers(null, controles, {"collapsed": false}).addTo(map);
                         resize();
 

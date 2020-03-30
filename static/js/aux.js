@@ -2,22 +2,41 @@ function get_ubicacion(ubicacion){
     return [ubicacion.coordinates[1],ubicacion.coordinates[0]];
 }
 
-function generar_popup_colaborador(nombre, horario, servicios, identificador){
-    var popup = "<b>$NOMBRE$</b></br>Horario: $HORARIO$<br/>Tipo de ayuda: $SERVICIOS$ <br/>Identificador: $IDENTIFICADOR$";
+String.prototype.format = String.prototype.f = function() {
+    var s = this,
+        i = arguments.length;
+
+    while (i--) {
+        s = s.replace(new RegExp('\\{' + i + '\\}', 'gm'), arguments[i]);
+    }
+    return s;
+};
+
+function generar_popup_colaborador(nombre, horario, mensaje, identificador){
+    var popup = "<b>$NOMBRE$</b></br>Horario: $HORARIO$<br/>Tipo de ayuda: $MENSAJE$ <br/>Identificador: $IDENTIFICADOR$";
     popup = popup.replace("$NOMBRE$", nombre);
     popup = popup.replace("$HORARIO$", horario);
-    popup = popup.replace("$SERVICIOS$", servicios);
+    popup = popup.replace("$MENSAJE$", mensaje);
     popup = popup.replace("$IDENTIFICADOR$", "C-"+identificador);
     return popup;
 }
 
-function generar_popup_peticion(nombre, peticion, identificador){
-    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Petición: $PETICION$<br/>Identificador: $IDENTIFICADOR$";
+function generar_popup_peticion(nombre, mensaje, identificador){
+    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Petición: $MENSAJE$<br/>Identificador: $IDENTIFICADOR$";
     popup = popup.replace("$NOMBRE$", nombre);
-    popup = popup.replace("$PETICION$", peticion);
+    popup = popup.replace("$MENSAJE$", mensaje);
     popup = popup.replace("$IDENTIFICADOR$", "P-"+identificador);
     return popup;
 }
+
+function generar_popup_comercio(nombre, telefono, mensaje){
+    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Teléfono: $TELEFONO$<br/>Detalles: $MENSAJE$";
+    popup = popup.replace("$NOMBRE$", nombre);
+    popup = popup.replace("$TELEFONO$", telefono);
+    popup = popup.replace("$MENSAJE$", mensaje);
+    return popup;
+}
+
 
 function get_colaboradores(url_colaboradores, url_contacto){
     var colaboradores = L.layerGroup();
@@ -61,6 +80,25 @@ function get_peticiones(url_peticiones, url_contacto){
     return peticiones;
 }
 
+function get_comercios(url_peticiones){
+    var peticiones = L.layerGroup();
+    $.ajax({
+        dataType: 'json',
+        url: url_peticiones,
+        success: function(data) {
+            for (index in data.features){
+                var datos = data.features[index].properties;
+                var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: blueIcon }).addTo(peticiones);
+                var popup = generar_popup_comercio(datos.nombre, datos.telefono, datos.mensaje);
+                marker.bindPopup(popup);
+            }
+        },
+        error: function (xhr, status, error) {
+            alert("Result: " + status + " " + error + " " + xhr.status + " " + xhr.statusText);
+        }
+    });
+    return peticiones;
+}
 
 function resize(){
     $("body").css("padding-top", $('nav').outerHeight());

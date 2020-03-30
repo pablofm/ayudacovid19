@@ -46,6 +46,7 @@ INSTALLED_APPS = [
     'peticiones',
     'fuentes',
     'emails',
+    'comercios',
 ]
 
 SITE_ID = 1
@@ -151,3 +152,18 @@ if ON_PROD:
 
 else:
     EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+
+
+if ON_PROD:
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': [
+            'rest_framework.renderers.JSONRenderer',
+        ]
+    }
+else:
+    REST_FRAMEWORK = {
+        'DEFAULT_RENDERER_CLASSES': [
+            'rest_framework.renderers.JSONRenderer',
+            'rest_framework.renderers.BrowsableAPIRenderer',
+        ]
+    }
