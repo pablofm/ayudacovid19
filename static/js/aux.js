@@ -46,9 +46,10 @@ function get_colaboradores(url_colaboradores, url_contacto){
         success: function(data) {
             for (index in data.features){
                 var datos = data.features[index].properties;
+                datos["id"] = data.features[index].id;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(colaboradores);
-                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.mensaje, datos.identificador);
-                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
+                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.mensaje, datos.id);
+                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
                 marker.bindPopup(popup);
             }
         },
@@ -67,9 +68,10 @@ function get_peticiones(url_peticiones, url_contacto){
         success: function(data) {
             for (index in data.features){
                 var datos = data.features[index].properties;
+                datos["id"] = data.features[index].id;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(peticiones);
-                var popup = generar_popup_peticion(datos.nombre, datos.mensaje, datos.identificador);
-                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.identificador)+"'>Contactar</a>");
+                var popup = generar_popup_peticion(datos.nombre, datos.mensaje, datos.id);
+                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
                 marker.bindPopup(popup);
             }
         },

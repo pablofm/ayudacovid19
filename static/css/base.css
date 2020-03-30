@@ -10,7 +10,7 @@ html, body {
     height: 800px;
 }
 
-#mapa_colaborador, #mapa_peticion{
+#mapa_auxiliar{
     height: 400px;
     margin-bottom: 1em;
 }

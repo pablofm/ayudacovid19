@@ -4,22 +4,17 @@ from rest_framework import serializers
 
 
 class PeticionListSerializer(GeoFeatureModelSerializer):
-    identificador = serializers.SerializerMethodField()
-
-    def get_identificador(self, obj):
-        return obj.pk
-
     class Meta:
         model = Peticion
         geo_field = "geom"
-        fields = ['nombre', 'mensaje', 'identificador']
+        fields = ['nombre', 'mensaje', 'id']
 
 
 class PeticionSerializer(PeticionListSerializer):
     class Meta:
         model = Peticion
         geo_field = "geom"
-        fields = "__all__"
+        exclude = ("creacion", )
 
 
 class SolicitudAccesoPeticionSerializer(serializers.ModelSerializer):

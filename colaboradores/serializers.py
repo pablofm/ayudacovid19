@@ -4,10 +4,9 @@ from rest_framework import serializers
 
 
 class ColaboradorListSerializer(GeoFeatureModelSerializer):
-    horario = serializers.SerializerMethodField()
-    identificador = serializers.SerializerMethodField()
+    horario_verbose = serializers.SerializerMethodField()
 
-    def get_horario(self, obj):
+    def get_horario_verbose(self, obj):
         return obj.get_horario_display()
 
     def get_identificador(self, obj):
@@ -16,14 +15,14 @@ class ColaboradorListSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Colaborador
         geo_field = "geom"
-        fields = ['nombre', 'horario', 'mensaje', 'horario', 'identificador']
+        fields = ['nombre', 'horario', 'mensaje', 'horario', 'id', 'horario_verbose']
 
 
 class ColaboradorSerializer(ColaboradorListSerializer):
     class Meta:
         model = Colaborador
         geo_field = "geom"
-        fields = "__all__"
+        exclude = ("creacion", )
 
 
 class SolicitudAccesoColaboradorSerializer(serializers.ModelSerializer):

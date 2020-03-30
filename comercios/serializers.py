@@ -6,4 +6,4 @@ class ComercioSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Comercio
         geo_field = "geom"
-        fields = "__all__"
+        exclude = ("creacion", )

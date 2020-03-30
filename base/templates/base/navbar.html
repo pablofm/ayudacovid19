@@ -5,14 +5,13 @@
   <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
     <span class="navbar-toggler-icon"></span>
   </button>
-
   <div class="collapse navbar-collapse" id="navbarSupportedContent">
     <ul class="navbar-nav mr-auto">
-        <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'crear-colaborador' %}">Ofrece tu ayuda</a></li>
-        <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'crear-peticion' %}">Pide ayuda</a></li>
-        <li class="nav-item accion"><a class="nav-link btn btn-info" href="{% url 'crear-comercio' %}">Añade un comercio</a></li>
-        <li class="nav-item accion"></li>
+      <li class="nav-item accion"><a class="nav-link btn btn-danger" href="{% url 'crear-peticion' %}">Pide ayuda</a></li>
+      <li class="nav-item accion"><a class="nav-link btn btn-success" href="{% url 'crear-colaborador' %}">Ofrece tu ayuda</a></li>
+      <li class="nav-item accion"><a class="nav-link btn btn-info" href="{% url 'crear-comercio' %}">Añade un comercio</a></li>
     </ul>
+    <p class="nav navbar-text"><a href="{% url 'informacion_importante' %}">Información importante</a></p> 
     <p class="nav navbar-text"><a class="nav-link" href="https://github.com/pablofm/ayudacovid19">Colabora en <img height="24" src="{% static "img/GitHub_Logo_White.png" %}"/></a></p> 
   </div>
 </nav>

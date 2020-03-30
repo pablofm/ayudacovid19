@@ -14,13 +14,13 @@
             <ul class="list-group list-group-flush">
                 <li class="list-group-item"><strong>Nombre:</strong> {{colaborador.nombre}}</li>
                 <li class="list-group-item"><strong>Mensaje:</strong> {{colaborador.mensaje}}</li>
-                <li class="list-group-item"><strong>Ubicación:</strong> <div id="mapa_colaborador"></div></li>
+                <li class="list-group-item"><strong>Ubicación:</strong> <div id="mapa_auxiliar"></div></li>
             </ul>
             <script>
                 var osmUrl='https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png';
                 var osmAttrib='&copy; <a href="https://openstreetmap.org/copyright">OpenStreetMap contributors</a>'
                 var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
-                var map = new L.Map('mapa_colaborador');
+                var map = new L.Map('mapa_auxiliar');
                 map.addLayer(osm);
                 var lat = parseFloat({{colaborador.geom.y}});
                 var lon = parseFloat({{colaborador.geom.x}});

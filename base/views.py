@@ -21,3 +21,7 @@ class PeticionEnviadaView(HomeView):
 
 class DatosRecibidosView(HomeView):
     template_name = 'base/datos_recibidos.html'
+
+
+class InformacionImportanteView(HomeView):
+    template_name = 'base/informacion_importante.html'

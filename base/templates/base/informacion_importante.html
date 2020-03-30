@@ -1,0 +1,30 @@
+{% extends "base/index.html" %}
+
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Información importante</h2>
+            <p>En <a href="{% url 'index' %}">ayudacovid19.com</a> tratamos la información que nos facilita con el fin de prestar un servicio común y voluntario del cual es objeto la creación del mismo.</p>
+            <p>Los datos proporcionados se conservarán mientras persista la crisis del Covid-19, y serán eliminados una vez el gobierno levante el estado de alarma que ha propiciado la creación especial de esta herramienta.</p>
+            <p>Los datos no se cederán a terceros en ningún caso, y sólo se expondrá a los usuarios la información concerniente a los usuarios Colaborador-Necesitado que sean asignados por elección propia. El usuario tiene derecho a dar de alta sus datos personales, modificar, rectificar los datos inexactos o solicitar su supresión cuando los datos ya no sean necesarios, enviando un correo electrónico a contacto@ayudacovid19.com</p>
+            <h2>¿Están seguros mis datos?</h2>
+            <p>Tu información de contacto no será compartida a no ser que así lo decidas y expreses directamente. Te enviaremos un correo electrónico/SMS para solicitarte permiso para compartir tus datos con alguien que quiera ayudarte o necesite ayuda.</p>
+            <p>En el caso de que seas un comercio, toda la información que proporciones estará disponible. (entendemos que es información pública).</p>
+            <h2>¿Cómo funciona?</h2>
+            <p>Para resolver distintas problemáticas encontradas durante el estado de alarma se han detectado varias situaciones que pretende resolver esta página:</p>
+            <h3>Necesito ayuda de algún tipo</h3>
+            <p>Pulsa el botón rojo e indica qué necesitas. Probablemente alguien en tu zona pueda ayudarte.</p>
+            <h3>Me gustaría ayudar a alguien</h3>
+            <p>Pulsa el botón verde e indica que estás disponible para ayudar. Probablemente alguien en tu zona necesite ayuda.</p>
+            <h3>¿Donde puedo comprar/hacer algo?</h3>
+            <p>Muchas veces se han tenido dificultades a la hora de encontrar determinados establecimientos abiertos.</p>
+            <p>Estos días los horarios cambian mucho sin previo aviso. Con el botón "Añade un comercio" podrás indicar qué establecimientos están abiertos en tu zona, sirviendo de ayuda a posibles vecinos y personal de máxima necesidad (transportistas, taxistas, sector sanitario, etc).</p>
+            <h2>#QUEDATEENCASA</h2>
+            <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+
+        </div>
+    </div>
+</div>
+<script >resize();</script>
+{% endblock content %}
