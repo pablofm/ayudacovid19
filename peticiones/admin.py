@@ -6,6 +6,7 @@ from emails.aux import get_url_autorizacion_peticion
 class PeticionAdmin(admin.OSMGeoAdmin):
     list_display = ('nombre', 'id', 'telefono', 'email', 'creacion')
     readonly_fields = ('creacion',)
+    search_fields = ['nombre', 'email', 'telefono', 'mensaje']
 
 
 class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
