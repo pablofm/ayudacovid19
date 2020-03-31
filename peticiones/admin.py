@@ -4,7 +4,7 @@ from emails.aux import get_url_autorizacion_peticion
 
 
 class PeticionAdmin(admin.OSMGeoAdmin):
-    list_display = ('nombre', 'id', 'telefono', 'email', 'creacion')
+    list_display = ('nombre', 'id', 'telefono', 'email', 'atendida', 'creacion')
     readonly_fields = ('creacion',)
     search_fields = ['nombre', 'email', 'telefono', 'mensaje']
 
@@ -22,6 +22,9 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
     def mensaje_necesitado(self, obj):
         return obj.peticion.mensaje
 
+    def atendida(self, obj):
+        return obj.peticion.atendida
+
     def url_autorizacion(self, obj):
         return get_url_autorizacion_peticion(obj.codigo_acceso)
 
@@ -32,7 +35,8 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
         'nombre_necesitado',
         'acceso_permitido',
         'codigo_acceso',
-        'creacion',
+        'atendida',
+        'creacion'
     )
     readonly_fields = (
         'codigo_acceso',
@@ -41,6 +45,7 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
         'telefono_necesitado',
         'email_necesitado',
         'mensaje_necesitado',
+        'atendida',
         'creacion'
     )
     fieldsets = (
@@ -51,8 +56,10 @@ class SolicitudAccesoPeticionAdmin(admin.OSMGeoAdmin):
                 'email_necesitado',
                 'mensaje_necesitado',
                 'codigo_acceso',
+                'atendida',
                 'url_autorizacion',
                 'acceso_permitido',
+
             ),
         }),
         ("Datos del colaborador", {
