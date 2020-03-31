@@ -47,8 +47,9 @@ function get_colaboradores(url_colaboradores, url_contacto){
             for (index in data.features){
                 var datos = data.features[index].properties;
                 datos["id"] = data.features[index].id;
+                console.log(datos);
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(colaboradores);
-                var popup = generar_popup_colaborador(datos.nombre, datos.horario, datos.mensaje, datos.id);
+                var popup = generar_popup_colaborador(datos.nombre, datos.horario_verbose, datos.mensaje, datos.id);
                 var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
                 marker.bindPopup(popup);
             }
