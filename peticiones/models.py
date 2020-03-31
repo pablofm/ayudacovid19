@@ -1,14 +1,12 @@
 from django.contrib.gis.db import models
-from django.core.validators import RegexValidator
 from shortuuidfield import ShortUUIDField
-
-validar_telefono = RegexValidator(r'^(\+34|0034|34)?[ -]*(6|7|9)[ -]*([0-9][ -]*){8}$', 'Añade un número de teléfono válido.')
+from phonenumber_field.modelfields import PhoneNumberField
 
 
 class Peticion(models.Model):
     geom = models.PointField(srid=4326)
     nombre = models.CharField(verbose_name='¿Cual es tu nombre?', max_length=500)
-    telefono = models.CharField(blank=True, max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
+    telefono = PhoneNumberField(blank=True, help_text='Por defecto acepta números españoles. Para añadir un número extranjero, añade el prefijo internacional')
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     mensaje = models.TextField(help_text='Indica qué necesitas')
     creacion = models.DateTimeField(auto_now_add=True)
@@ -24,8 +22,8 @@ class Peticion(models.Model):
 class SolicitudAccesoPeticion(models.Model):
     peticion = models.ForeignKey(Peticion, on_delete=models.CASCADE, related_name='solicitudes_acceso')
     nombre = models.CharField(verbose_name='¿Cual es tu nombre?', max_length=500)
-    telefono = models.CharField(max_length=12, verbose_name='¿Cual es tu número de teléfono?', validators=[validar_telefono])
-    email = models.EmailField(verbose_name='¿Cual es tu correo electrónico?')
+    telefono = PhoneNumberField(blank=True, help_text='Por defecto acepta números españoles. Para añadir un número extranjero, añade el prefijo internacional')
+    email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     mensaje = models.TextField(verbose_name='¿Cómo puedes ayudar?')
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()

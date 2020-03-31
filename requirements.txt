@@ -9,3 +9,4 @@ Faker
 factory-boy
 django-shortuuidfield
 celery
+django-phonenumber-field[phonenumbers]

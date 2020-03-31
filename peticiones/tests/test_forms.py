@@ -59,15 +59,15 @@ class SolicitarContactoPeticionFormTest(TestCase):
         form = ContactarPeticionForm(data=self.datos_formulario)
         self.assertFalse(form.is_valid())
 
-    def test_formulario_sin_email_no_es_valido(self):
+    def test_formulario_sin_email_es_valido(self):
         self.datos_formulario['email'] = None
         form = ContactarPeticionForm(data=self.datos_formulario)
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
 
     def test_formulario_sin_telefono_no_es_valido(self):
         self.datos_formulario['telefono'] = None
         form = ContactarPeticionForm(data=self.datos_formulario)
-        self.assertFalse(form.is_valid())
+        self.assertTrue(form.is_valid())
 
     def test_formulario_requiere_o_telefono_o_email(self):
         self.datos_formulario['telefono'] = None

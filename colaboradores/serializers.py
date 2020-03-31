@@ -12,6 +12,11 @@ class ColaboradorListSerializer(GeoFeatureModelSerializer):
     def get_identificador(self, obj):
         return obj.pk
 
+    def validate(self, data):
+        if "email" not in data and "telefono" not in data:
+            raise serializers.ValidationError("Es necesario un método de contacto: email o teléfono")
+        return data
+
     class Meta:
         model = Colaborador
         geo_field = "geom"
@@ -19,6 +24,7 @@ class ColaboradorListSerializer(GeoFeatureModelSerializer):
 
 
 class ColaboradorSerializer(ColaboradorListSerializer):
+
     class Meta:
         model = Colaborador
         geo_field = "geom"
@@ -26,6 +32,11 @@ class ColaboradorSerializer(ColaboradorListSerializer):
 
 
 class SolicitudAccesoColaboradorSerializer(serializers.ModelSerializer):
+    def validate(self, data):
+        if "email" not in data and "telefono" not in data:
+            raise serializers.ValidationError("Es necesario un método de contacto: email o teléfono")
+        return data
+
     class Meta:
         model = SolicitudAccesoColaborador
         exclude = ("acceso_permitido", "codigo_acceso", "creacion")

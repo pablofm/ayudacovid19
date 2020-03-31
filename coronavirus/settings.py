@@ -41,6 +41,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_gis',
     'bootstrap4',
+    'phonenumber_field',
     'base',
     'colaboradores',
     'peticiones',
@@ -167,3 +168,5 @@ else:
             'rest_framework.renderers.BrowsableAPIRenderer',
         ]
     }
+
+PHONENUMBER_DEFAULT_REGION = 'ES'

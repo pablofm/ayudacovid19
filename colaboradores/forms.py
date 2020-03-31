@@ -11,6 +11,13 @@ class ColaboradorForm(forms.ModelForm):
     lat = forms.FloatField(required=False)
     lon = forms.FloatField(required=False)
 
+    def clean(self):
+        cleaned_data = super().clean()
+        telefono = cleaned_data.get("telefono")
+        email = cleaned_data.get("email")
+        if not email and not telefono:
+            raise ValidationError("Es necesario un método de contacto: email o teléfono")
+
     def clean_lat(self):
         lat = self.cleaned_data['lat']
         if not lat:
@@ -41,6 +48,21 @@ class ColaboradorForm(forms.ModelForm):
 
 class ContactarColaboradorForm(forms.ModelForm):
     id_colaborador = forms.IntegerField(required=False)
+
+    def clean(self):
+        cleaned_data = super().clean()
+        telefono = cleaned_data.get("telefono")
+        email = cleaned_data.get("email")
+        if not email and not telefono:
+            raise ValidationError("Es necesario un método de contacto: email o teléfono")
+
+    def is_valid(self):
+        valid = super(ContactarColaboradorForm, self).is_valid()
+        if not valid:
+            return valid
+        if not self.data["email"] and not self.data["telefono"]:
+            return False
+        return True
 
     def save(self):
         contacto = super(ContactarColaboradorForm, self).save(commit=False)
