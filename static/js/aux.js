@@ -71,7 +71,12 @@ function get_peticiones(url_peticiones, url_contacto){
                 datos["id"] = data.features[index].id;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: redIcon }).addTo(peticiones);
                 var popup = generar_popup_peticion(datos.nombre, datos.mensaje, datos.id);
-                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
+                if (datos.atendida){
+                    var popup = popup.concat("<br/><b>RESUELTA</b>");
+                }
+                else{
+                    var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
+                }
                 marker.bindPopup(popup);
             }
         },

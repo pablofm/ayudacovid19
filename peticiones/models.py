@@ -10,6 +10,7 @@ class Peticion(models.Model):
     email = models.EmailField(blank=True, verbose_name='¿Cual es tu correo electrónico?')
     mensaje = models.TextField(help_text='Indica qué necesitas')
     creacion = models.DateTimeField(auto_now_add=True)
+    atendida = models.BooleanField(default=False)
 
     def __str__(self):
         return self.nombre

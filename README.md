@@ -185,7 +185,8 @@ Incluye un  API por si se quiere integrar el mapa con aplicaciones externas. En 
     "nombre": "Pablo",
     "telefono": "666666666",
     "email": "pablo@email.com",
-    "mensaje": "Puedo ayudar con X, Y y Z"
+    "mensaje": "Puedo ayudar con X, Y y Z",
+    "atendida": false
   }
 }
 ```
@@ -201,7 +202,7 @@ Incluye un  API por si se quiere integrar el mapa con aplicaciones externas. En 
   "peticion": 1
 }
 ```
-  Donde colaborador es la ID de una petición existente en la BBDD.
+  Donde colaborador es la ID de una petición existente en la BBDD. Si la petición ya ha sido atendida, no permitirá la creación del objeto.
 
 ### Comercios
 #### Listar comercios

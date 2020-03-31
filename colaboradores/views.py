@@ -17,7 +17,7 @@ class CrearColaboradorView(CreateView):
 class SolicitarContactoColaboradorView(CreateView):
     template_name = 'colaboradores/contactar.html'
     form_class = ContactarColaboradorForm
-    success_url = reverse_lazy('peticion_enviada')
+    success_url = reverse_lazy('acceso_solicitado')
 
     def get_context_data(self, **kwargs):
         context = super(SolicitarContactoColaboradorView, self).get_context_data(**kwargs)

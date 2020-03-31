@@ -1,0 +1,15 @@
+{% extends "base/index.html" %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <div class="col-12">
+            <h2>Petición atendida</h2>
+            <p>La petición que intentas atender ya ha sido atendida por lo que tu ayuda ya no es necesaria.</p> 
+            <p>Un saludo y que tengas un buen día.</p>
+            <h2>#QUEDATEENCASA</h2>
+            <p><a href="{% url 'index' %}">Volver a la página principal</a></p>
+        </div>
+    </div>
+</div>
+<script >resize();</script>
+{% endblock content %}

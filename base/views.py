@@ -15,8 +15,8 @@ class HomeView(TemplateView):
         return context
 
 
-class PeticionEnviadaView(HomeView):
-    template_name = 'base/peticion_enviada.html'
+class AccesoSolicitadoView(HomeView):
+    template_name = 'base/acceso_solicitado.html'
 
 
 class DatosRecibidosView(HomeView):
@@ -25,3 +25,7 @@ class DatosRecibidosView(HomeView):
 
 class InformacionImportanteView(HomeView):
     template_name = 'base/informacion_importante.html'
+
+
+class PeticionAtendidaView(HomeView):
+    template_name = 'base/peticion_atendida.html'

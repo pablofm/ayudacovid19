@@ -5,6 +5,7 @@ from django.shortcuts import render
 from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from emails.emails import enviar_correo_acceso_datos
+from django.http import HttpResponseRedirect
 
 
 class CrearPeticionView(CreateView):
@@ -17,12 +18,18 @@ class CrearPeticionView(CreateView):
 class SolicitarContactoPeticionView(CreateView):
     template_name = 'peticiones/contactar.html'
     form_class = ContactarPeticionForm
-    success_url = reverse_lazy('peticion_enviada')
+    success_url = reverse_lazy('acceso_solicitado')
 
-    def get_context_data(self, **kwargs):
-        context = super(SolicitarContactoPeticionView, self).get_context_data(**kwargs)
-        context['peticion'] = get_object_or_404(Peticion, pk=self.kwargs['pk'])
-        return context
+    def get(self, request, *args, **kwargs):
+        peticion = get_object_or_404(Peticion, pk=self.kwargs['pk'])
+        if peticion.atendida:
+            return HttpResponseRedirect(reverse_lazy('peticion_atendida'))
+        else:
+            context = {
+                'peticion': peticion,
+                'form': self.form_class
+            }
+            return render(request, self.template_name, context)
 
 
 def permitirContacto(request):

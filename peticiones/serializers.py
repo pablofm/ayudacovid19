@@ -12,7 +12,7 @@ class PeticionListSerializer(GeoFeatureModelSerializer):
     class Meta:
         model = Peticion
         geo_field = "geom"
-        fields = ['nombre', 'mensaje', 'id']
+        fields = ['nombre', 'mensaje', 'atendida', 'id']
 
 
 class PeticionSerializer(PeticionListSerializer):
@@ -24,8 +24,12 @@ class PeticionSerializer(PeticionListSerializer):
 
 class SolicitudAccesoPeticionSerializer(serializers.ModelSerializer):
     def validate(self, data):
+        if data["peticion"].atendida:
+            raise serializers.ValidationError("La petición que intentas atender ya ha sido atendida")
+
         if "email" not in data and "telefono" not in data:
             raise serializers.ValidationError("Es necesario un método de contacto: email o teléfono")
+
         return data
 
     class Meta:
