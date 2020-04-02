@@ -26,41 +26,31 @@ class SolicitarContactoColaboradorView(CreateView):
 
 
 def permitirContacto(request):
-    permitido = False
-    nombre = None
-    solicitud = None
     codigo = request.GET.get('codigo')
+    solicitud = get_object_or_404(SolicitudAccesoColaborador, codigo_acceso=codigo)
+    # El colaborador da permiso para compartir sus datos. Se envían 2 correos:
+    # El primero para el colaborador, con los datos de la persona que necesita ayuda
+    datos_email_colaborador = {
+        'nombre_para': solicitud.colaborador.nombre,
+        'email_para': solicitud.colaborador.email,
+        'nombre_contacto': solicitud.nombre,
+        'telefono_contacto': str(solicitud.telefono),
+        'email_contacto': solicitud.email,
+        'mensaje_contacto': solicitud.mensaje,
+    }
+    enviar_correo_acceso_datos.delay(datos_email_colaborador)
+    # El segundo para la persona necesitada, con los datos de la persona que le ofrece ayuda
 
-    if SolicitudAccesoColaborador.objects.filter(codigo_acceso=codigo).exists():
-        solicitud = SolicitudAccesoColaborador.objects.get(codigo_acceso=codigo)
+    datos_email_solicitante = {
+        'nombre_para': solicitud.nombre,
+        'email_para': solicitud.email,
+        'nombre_contacto': solicitud.colaborador.nombre,
+        'telefono_contacto': str(solicitud.colaborador.telefono),
+        'email_contacto': solicitud.colaborador.email,
+        'mensaje_contacto': solicitud.colaborador.mensaje
+    }
+    enviar_correo_acceso_datos.delay(datos_email_solicitante)
+    solicitud.acceso_permitido = True
+    solicitud.save()
 
-    if solicitud:
-        solicitud.acceso_permitido = True
-        solicitud.save()
-        permitido = True
-        nombre = solicitud.nombre
-
-        # El colaborador da permiso para compartir sus datos. Se envían 2 correos:
-        # El primero para el colaborador, con los datos de la persona que necesita ayuda
-        datos_email_colaborador = {
-            'nombre_para': solicitud.colaborador.nombre,
-            'email_para': solicitud.colaborador.email,
-            'nombre_contacto': solicitud.nombre,
-            'telefono_contacto': solicitud.telefono,
-            'email_contacto': solicitud.email,
-            'mensaje_contacto': solicitud.mensaje,
-        }
-        enviar_correo_acceso_datos.delay(datos_email_colaborador)
-        # El segundo para la persona necesitada, con los datos de la persona que le ofrece ayuda
-
-        datos_email_solicitante = {
-            'nombre_para': solicitud.nombre,
-            'email_para': solicitud.email,
-            'nombre_contacto': solicitud.colaborador.nombre,
-            'telefono_contacto': solicitud.colaborador.telefono,
-            'email_contacto': solicitud.colaborador.email,
-            'mensaje_contacto': solicitud.colaborador.mensaje
-        }
-        enviar_correo_acceso_datos.delay(datos_email_solicitante)
-
-    return render(request, 'base/validar_codigo.html', {"nombre": nombre, "permitido": permitido})
+    return render(request, 'base/validar_codigo.html', {"nombre": solicitud.nombre})

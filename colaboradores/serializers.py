@@ -9,9 +9,6 @@ class ColaboradorListSerializer(GeoFeatureModelSerializer):
     def get_horario_verbose(self, obj):
         return obj.get_horario_display()
 
-    def get_identificador(self, obj):
-        return obj.pk
-
     def validate(self, data):
         if "email" not in data and "telefono" not in data:
             raise serializers.ValidationError("Es necesario un método de contacto: email o teléfono")
