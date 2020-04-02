@@ -22,7 +22,7 @@ function generar_popup_colaborador(nombre, horario, mensaje, identificador){
 }
 
 function generar_popup_peticion(nombre, mensaje, identificador){
-    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Petición: $MENSAJE$<br/>Identificador: $IDENTIFICADOR$";
+    var popup = "<b>$NOMBRE$</b></br>Petición: $MENSAJE$<br/>Identificador: $IDENTIFICADOR$";
     popup = popup.replace("$NOMBRE$", nombre);
     popup = popup.replace("$MENSAJE$", mensaje);
     popup = popup.replace("$IDENTIFICADOR$", "P-"+identificador);
@@ -30,7 +30,7 @@ function generar_popup_peticion(nombre, mensaje, identificador){
 }
 
 function generar_popup_comercio(nombre, telefono, mensaje){
-    var popup = "<b>$NOMBRE$</b></br>"+"<br/>Teléfono: $TELEFONO$<br/>Detalles: $MENSAJE$";
+    var popup = "<b>$NOMBRE$</b></br>Teléfono: $TELEFONO$<br/>Detalles: $MENSAJE$";
     popup = popup.replace("$NOMBRE$", nombre);
     popup = popup.replace("$TELEFONO$", telefono);
     popup = popup.replace("$MENSAJE$", mensaje);
@@ -49,7 +49,7 @@ function get_colaboradores(url_colaboradores, url_contacto){
                 datos["id"] = data.features[index].id;
                 var marker = L.marker(get_ubicacion(data.features[index].geometry), { title: datos.nombre, icon: greenIcon }).addTo(colaboradores);
                 var popup = generar_popup_colaborador(datos.nombre, datos.horario_verbose, datos.mensaje, datos.id);
-                var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
+                var popup = popup.concat("<br/><strong><a href='"+url_contacto.replace("0", datos.id)+"'>Ofrécele ayuda</a></strong>");
                 marker.bindPopup(popup);
             }
         },
@@ -75,7 +75,7 @@ function get_peticiones(url_peticiones, url_contacto){
                     var popup = popup.concat("<br/><b>RESUELTA</b>");
                 }
                 else{
-                    var popup = popup.concat("<br/><a href='"+url_contacto.replace("0", datos.id)+"'>Contactar</a>");
+                    var popup = popup.concat("<br/><strong><a href='"+url_contacto.replace("0", datos.id)+"'>Pídele ayuda</a></strong>");
                 }
                 marker.bindPopup(popup);
             }
