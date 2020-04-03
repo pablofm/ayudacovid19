@@ -25,7 +25,7 @@
     <!-- Make sure you put this AFTER Leaflet's CSS -->
     <script src="{% static 'assets/leaflet/leaflet.js' %}"></script>
     <script src="{% static 'js/leaflet-color-markers.js' %}"></script>
-    <script src="{% static 'js/aux.js' %}"></script>
+    <script src="{% static 'js/aux.js' %}?{% now 'zu'  %}"></script>
 
     <link rel="stylesheet" href="{% static 'assets/Leaflet.markercluster-1.4.1/MarkerCluster.css' %}" />
     <link rel="stylesheet" href="{% static 'assets/Leaflet.markercluster-1.4.1/MarkerCluster.Default.css' %}" />
