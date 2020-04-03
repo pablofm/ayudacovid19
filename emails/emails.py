@@ -27,7 +27,6 @@ def enviar_correo_pidiendo_ayuda(contacto_pk):
         'mensaje': solicitud.mensaje,
         'enlace': get_url_autorizacion_colaborador(solicitud.codigo_acceso)
     }
-    print(datos)
 
     asunto = "{} te necesita".format(datos["nombre"])
     plain_message = """
