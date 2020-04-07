@@ -9,6 +9,8 @@ urlpatterns = [
     path('peticiones/add', peticiones_views.CrearPeticionView.as_view(), name='crear-peticion'),
     path('peticiones/<pk>/acceso', peticiones_views.SolicitarContactoPeticionView.as_view(), name='acceso-peticion'),
     path('peticiones/validar', peticiones_views.permitirContacto, name='validar-acceso-peticion'),
+    path('API/peticiones/solicitudes', peticiones_views.solicitudes, name="solicitudes-peticion")
+
 ]
 
 router.register('API/peticiones', peticiones_rest.APIPeticionesView)

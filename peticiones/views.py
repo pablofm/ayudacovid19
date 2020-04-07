@@ -6,6 +6,7 @@ from django.urls import reverse_lazy
 from django.shortcuts import get_object_or_404
 from emails.emails import enviar_correo_acceso_datos
 from django.http import HttpResponseRedirect
+from django.http import JsonResponse
 
 
 class CrearPeticionView(CreateView):
@@ -61,3 +62,7 @@ def permitirContacto(request):
     solicitud.save()
 
     return render(request, 'base/validar_codigo.html', {"nombre": solicitud.nombre})
+
+
+def solicitudes(request):
+    return JsonResponse({'solicitudes': SolicitudAccesoPeticion.objects.count()})
