@@ -22,8 +22,10 @@
                 var osm = new L.TileLayer(osmUrl, {minZoom: 5, maxZoom: 18, attribution: osmAttrib});
                 var map = new L.Map('mapa_auxiliar');
                 map.addLayer(osm);
-                var lat = parseFloat({{peticion.geom.y}});
-                var lon = parseFloat({{peticion.geom.x}});
+                var rawLat = "{{peticion.geom.y}}";
+                var rawLon = "{{peticion.geom.x}}";
+                var lat = parseFloat(rawLat.replace(',', '.'));
+                var lon = parseFloat(rawLon.replace(',', '.'));
                 L.marker([lat, lon], {icon: redIcon}).addTo(map);
                 map.setView(new L.LatLng(lat,lon),14);
                 resize();
