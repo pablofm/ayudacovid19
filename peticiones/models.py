@@ -11,6 +11,7 @@ class Peticion(models.Model):
     mensaje = models.TextField(help_text='Indica qué necesitas')
     creacion = models.DateTimeField(auto_now_add=True)
     atendida = models.BooleanField(default=False)
+    fuente = models.CharField(max_length=25, default="???")
 
     def __str__(self):
         return self.nombre
@@ -29,6 +30,7 @@ class SolicitudAccesoPeticion(models.Model):
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()
     creacion = models.DateTimeField(auto_now_add=True)
+    fuente = models.CharField(max_length=25, default="???")
 
     def __str__(self):
         return self.peticion.nombre

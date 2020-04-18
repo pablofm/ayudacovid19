@@ -5,6 +5,7 @@ from colaboradores.models import Colaborador, SolicitudAccesoColaborador
 from emails.emails import enviar_correo_pidiendo_ayuda
 from emails.emails import enviar_correo_nuevo_colaborador
 from emails.emails import enviar_correo_nueva_solicitud_colaborador
+from django.conf import settings
 
 
 class ColaboradorForm(forms.ModelForm):
@@ -35,6 +36,7 @@ class ColaboradorForm(forms.ModelForm):
     def save(self, commit=True):
         colaborador = super(ColaboradorForm, self).save(commit=False)
         colaborador.geom = Point(self.cleaned_data['lon'], self.cleaned_data['lat'], srid=4326)
+        colaborador.fuente = settings.FUENTE
         if commit:
             colaborador.save()
         enviar_correo_nuevo_colaborador.delay()
@@ -43,7 +45,7 @@ class ColaboradorForm(forms.ModelForm):
     class Meta:
         model = Colaborador
         fields = '__all__'
-        exclude = ['geom']
+        exclude = ['geom', 'fuente']
 
 
 class ContactarColaboradorForm(forms.ModelForm):
@@ -67,6 +69,7 @@ class ContactarColaboradorForm(forms.ModelForm):
     def save(self):
         contacto = super(ContactarColaboradorForm, self).save(commit=False)
         contacto.colaborador = Colaborador.objects.get(pk=self.cleaned_data['id_colaborador'])
+        contacto.fuente = settings.FUENTE
         contacto.save()
         # Se envía un correo donde alquien que necesita ayuda solicita el acceso a los datos un colaborador.
         enviar_correo_nueva_solicitud_colaborador.delay()
@@ -77,4 +80,4 @@ class ContactarColaboradorForm(forms.ModelForm):
     class Meta:
         model = SolicitudAccesoColaborador
         fields = '__all__'
-        exclude = ['colaborador', 'codigo_acceso', 'acceso_permitido']
+        exclude = ['colaborador', 'codigo_acceso', 'acceso_permitido', 'fuente']

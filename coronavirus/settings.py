@@ -25,6 +25,12 @@ if ON_PROD:
 else:
     DEBUG = True
 
+if ON_PROD:
+    FUENTE = os.environ['FUENTE']
+else:
+    FUENTE = '¿?¿?¿?'
+
+
 ALLOWED_HOSTS = ['*']
 
 # Application definition

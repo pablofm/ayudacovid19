@@ -53,7 +53,6 @@ def permitirContacto(request):
     enviar_correo_acceso_datos.delay(datos_email_solicitante)
     solicitud.acceso_permitido = True
     solicitud.save()
-
     return render(request, 'base/validar_codigo.html', {"nombre": solicitud.nombre})
 
 

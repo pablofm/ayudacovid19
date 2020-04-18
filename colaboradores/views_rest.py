@@ -20,9 +20,12 @@ class APIColaboradoresView(mixins.CreateModelMixin, mixins.ListModelMixin, views
         return ColaboradorListSerializer
 
     def perform_create(self, serializer):
+        colaborador = serializer.save()
         if "key" in self.request.data:
-            actualizar_fuente(self.request.data["key"])
-        serializer.save()
+            key = self.request.data["key"]
+            colaborador.fuente = key
+            colaborador.save()
+            actualizar_fuente(key)
         enviar_correo_nuevo_colaborador.delay()
 
 
@@ -31,8 +34,11 @@ class APIContactoColaboradorView(mixins.CreateModelMixin, viewsets.GenericViewSe
     serializer_class = SolicitudAccesoColaboradorSerializer
 
     def perform_create(self, serializer):
-        if "key" in self.request.data:
-            actualizar_fuente(self.request.data["key"])
         contacto = serializer.save()
+        if "key" in self.request.data:
+            key = self.request.data["key"]
+            contacto.fuente = key
+            contacto.save()
+            actualizar_fuente(key)
         enviar_correo_nueva_solicitud_colaborador.delay()
         enviar_correo_pidiendo_ayuda.delay(contacto.pk)

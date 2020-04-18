@@ -8,6 +8,7 @@ class Comercio(models.Model):
     telefono = PhoneNumberField(blank=True, help_text='Por defecto acepta números españoles. Para añadir un número extranjero, añade el prefijo internacional')
     mensaje = models.TextField()
     creacion = models.DateTimeField(auto_now_add=True)
+    fuente = models.CharField(max_length=25, default="???")
 
     def __str__(self):
         return self.nombre

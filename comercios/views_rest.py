@@ -11,7 +11,10 @@ class APIComerciosView(mixins.CreateModelMixin, mixins.ListModelMixin, viewsets.
     serializer_class = ComercioSerializer
 
     def perform_create(self, serializer):
+        comercio = serializer.save()
         if "key" in self.request.data:
-            actualizar_fuente(self.request.data["key"])
-        serializer.save()
+            key = self.request.data["key"]
+            comercio.fuente = key
+            comercio.save()
+            actualizar_fuente(key)
         enviar_correo_nuevo_comercio.delay()

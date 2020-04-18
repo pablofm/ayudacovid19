@@ -24,6 +24,7 @@ class Colaborador(models.Model):
     horario = models.CharField(verbose_name='¿A qué horas estás disponible?', max_length=1, choices=HORARIO_CHOICES, default=TODO_EL_DIA)
     mensaje = models.TextField(help_text='Indica de qué forma puedes ayudar. Ejemplos: Realizar la compra, asistir al médico, ir a la farmacia...')
     creacion = models.DateTimeField(auto_now_add=True)
+    fuente = models.CharField(max_length=25, default="???")
 
     def __str__(self):
         return self.nombre
@@ -42,6 +43,7 @@ class SolicitudAccesoColaborador(models.Model):
     acceso_permitido = models.BooleanField(default=False)
     codigo_acceso = ShortUUIDField()
     creacion = models.DateTimeField(auto_now_add=True)
+    fuente = models.CharField(max_length=25, default="???")
 
     def __str__(self):
         return self.colaborador.nombre
